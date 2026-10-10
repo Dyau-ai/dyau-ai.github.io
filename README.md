@@ -12,12 +12,43 @@ A clean, beginner-friendly SaaS demonstration website built with pure HTML, mode
 ├── index.html         # Main Page (Company Overview + Expandable Demo Hub)
 ├── e-invoicing.html   # Fully Interactive Malaysia e-Invoicing Live Demo
 ├── demo.html          # Compatibility redirect to e-invoicing.html
+├── images/            # Official Dyau.ai logo assets (navy, white, teal)
+│   ├── dyau-logo.png
+│   ├── dyau-logo-white.png
+│   └── dyau-logo-teal.png
 ├── css/
-│   └── styles.css     # Responsive Corporate Stylesheet (Navy + White + Soft Teal)
+│   └── styles.css     # Brand Stylesheet (Official Dyau.ai Color Tokens)
 ├── styles.css         # Root copy of stylesheet for flexible static hosting
 ├── js/
 │   └── e-invoicing.js # Interactive Live Demo Engine (Vanilla JavaScript)
 └── README.md          # Publishing instructions and documentation
+```
+
+---
+
+## 🎨 Official Brand Tokens
+
+```css
+:root {
+  /* Dyau.ai brand */
+  --color-primary: #00204C;
+  --color-secondary: #35507A;
+  --color-accent: #28C5D8;
+  /* Supporting colours */
+  --color-slate: #5C6B87;
+  --color-muted: #8B96A9;
+  --color-border: #C9D2E0;
+  /* Surfaces */
+  --color-background: #F5F7FA;
+  --color-surface: #FFFFFF;
+  /* Text */
+  --color-heading: #00204C;
+  --color-body: #5C6B87;
+  --color-text-on-dark: #FFFFFF;
+  /* Interactive states */
+  --color-primary-hover: #35507A;
+  --color-accent-hover: #18AEC2;
+}
 ```
 
 ---
