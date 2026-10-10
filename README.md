@@ -1,59 +1,63 @@
-# Dyau.ai — Public Website & Malaysia e-Invoicing Demonstration
+# Dyau.ai — Public Website & Interactive Malaysia e-Invoicing Live Demo
 
-A clean, beginner-friendly SaaS showcase and demonstration website for **Dyau.ai** built for deployment on **GitHub Pages** at `https://dyau-ai.github.io/`.
+A clean, beginner-friendly SaaS demonstration website built with pure HTML, modern CSS, and vanilla JavaScript for deployment on **GitHub Pages** at:
+👉 **https://dyau-ai.github.io/**
 
 ---
 
-## 📁 File Structure
+## 📁 Repository Structure
 
 ```
 .
-├── index.html         # Main Page (Company Overview, Capabilities, Locations)
-├── demo.html          # Malaysia e-Invoicing SaaS Interactive Demonstration
+├── index.html         # Main Page (Company Overview + Expandable Demo Hub)
+├── e-invoicing.html   # Fully Interactive Malaysia e-Invoicing Live Demo
+├── demo.html          # Compatibility redirect to e-invoicing.html
 ├── css/
-│   └── styles.css     # Corporate Theme (Deep Navy, White, Soft Teal Accents)
+│   └── styles.css     # Responsive Corporate Stylesheet (Navy + White + Soft Teal)
+├── styles.css         # Root copy of stylesheet for flexible static hosting
 ├── js/
-│   └── demo.js        # Interactive Scenarios, Journey Steps, Modal & Clipboard
-└── README.md          # Project overview & publishing guide
+│   └── e-invoicing.js # Interactive Live Demo Engine (Vanilla JavaScript)
+└── README.md          # Publishing instructions and documentation
 ```
 
 ---
 
-## 🚀 How to Publish to GitHub Pages (`dyau-ai.github.io`)
+## 🚀 How to Publish to GitHub Pages (`https://dyau-ai.github.io/`)
 
 ### Step 1: Create or Confirm the GitHub Repository
-1. On GitHub, create a new public repository named exactly:
+1. On GitHub, create a repository named exactly:
    ```
    dyau-ai.github.io
    ```
-   *(Using the exact name `<organization-or-username>.github.io` automatically configures it as a user/organization GitHub Pages root site).*
+   *(For user/organization pages, repositories named `<username>.github.io` automatically serve directly from the root of the `main` branch).*
 
-### Step 2: Initialize Git and Commit the Files
-In your project directory:
+### Step 2: Initialize Git and Push
 
 ```bash
-# 1. Initialize git (if not already a standalone repo)
+cd /Users/sauravsahu/Documents/Anti-gravity-projects/Dyauai-einvoicing
+
+# Initialize git (if not already initialized in this folder)
 git init
 
-# 2. Add files
-git add index.html demo.html css/ js/ README.md
+# Stage the website files
+git add index.html e-invoicing.html demo.html styles.css css/ js/ README.md
 
-# 3. Commit
-git commit -m "Initial release: Dyau.ai website & Malaysia e-Invoicing demo"
+# Commit
+git commit -m "Deploy Dyau.ai website with expandable Demo Hub and e-Invoicing demo"
 
-# 4. Set branch to main
+# Set branch to main
 git branch -M main
 
-# 5. Link to your GitHub repository
+# Link to your remote GitHub repository
 git remote add origin https://github.com/dyau-ai/dyau-ai.github.io.git
 
-# 6. Push to GitHub
+# Push to GitHub
 git push -u origin main
 ```
 
 ### Step 3: Verify GitHub Pages Settings
-1. Go to your repository on GitHub: `https://github.com/dyau-ai/dyau-ai.github.io`
-2. Navigate to **Settings** → **Pages** (under "Code and automation").
+1. Open the repository on GitHub: `https://github.com/dyau-ai/dyau-ai.github.io`
+2. Go to **Settings** → **Pages** (under "Code and automation").
 3. Under **Build and deployment**:
    - **Source**: `Deploy from a branch`
    - **Branch**: `main` / `/ (root)`
@@ -63,10 +67,37 @@ git push -u origin main
 
 ---
 
-## 🌟 Key Highlights
+## 🌟 Key Features
 
-- **Executive & Non-Technical Ready**: Zero complex jargon or internal architecture revealed. Focused entirely on enterprise value, workflow simplicity, and LHDN compliance.
-- **Realistic Sample Data**: Features compliant Malaysian dummy entities (`Dyau Demo Sdn Bhd` → `Example Trading Sdn Bhd`), valid SST breakdown, and realistic UUID formatting.
-- **Interactive Scenarios**: Explore **Success (Valid)**, **On Hold**, **Rejected**, and **Withdrawn / Cancelled** with instant visual feedback.
-- **Validated e-Invoice Preview**: Complete with vector QR code ("Sample QR Code – Scan to Verify") and official clearance timestamp.
-- **Fast & Responsive**: Pure HTML5, modern CSS3, and lightweight vanilla JavaScript. No heavy frameworks or external dependencies.
+### 1. Main Page (`index.html`) & Expandable Demo Hub
+- **Hero & Strategic Positioning**: Official tagline *"Wisdom Beyond Intelligence"* and *"AI, Data & Deep Technology for Enterprise"*.
+- **About & 6 Core Capabilities**: Executive overview, intelligent automation, platforms, optimization, forward-deployed engineering, AI governance, and tech talent solutions.
+- **Expandable Demo Hub**:
+  - Built with a flexible responsive card grid (`minmax(360px, 1fr)`).
+  - Renders 1 column on mobile and 2–3 columns on desktop.
+  - Adding a new demo card in the future is as simple as inserting a new card block into `<div class="demo-hub-grid">` without altering any layout rules.
+  - Includes a visual placeholder card highlighting upcoming enterprise solutions.
+
+### 2. Interactive Live Demo (`e-invoicing.html`)
+- **Document Type Selector**: Switch between:
+  1. `Invoice (01)`
+  2. `Credit Note (02)`
+  3. `Debit Note (03)`
+  4. `Refund Note (04)`
+  5. `Self-billed Invoice (11)` — includes distinctive visual badge and guidance explaining buyer-issued transactions.
+- **End-to-End Progress Stepper with Action Buttons**:
+  - **Step 1: Data Arrival** → Raw JSON payload preview + clean grouped summary of fields. Button: *“Receive Data”*.
+  - **Step 2: Data Stored** → Intake reference ID and secure queue receipt. Button: *“Process Document”*.
+  - **Step 3: Platform Checks** → 3 verification cards (schema, tax math, registry identity). Button: *“Submit to LHDN MyInvois”*.
+  - **Step 4: Submission** → Visual transmission between Dyau.ai Gateway and government API. Button: *“Get Validation Result”*.
+  - **Step 5: Validation Result (User Choice)** → Interactive buttons for:
+    - 🟢 **Success (Valid)** (generates UUID & unlocks final outputs)
+    - 🟡 **On Hold** (holding reason & queuing notice)
+    - 🔴 **Rejected** (error description & 1-click remediation)
+    - ⚪ **Withdrawn / Cancelled** (72h cancellation receipt)
+- **Final Outputs**:
+  - **Validated e-Invoice Card**: Official stamped status, copyable UUID, line items table, and dummy QR code (*"Sample QR Code – Scan to Verify"*).
+  - **Dual Downstream Outputs**: Side-by-side simulated **REST API JSON Response** and **Batch Reconciliation CSV File**.
+- **User Tools**:
+  - *“Reset Demo”* button at any stage.
+  - 100% offline-ready static site with zero backend dependencies.
