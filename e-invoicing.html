@@ -35,6 +35,29 @@
     </div>
   </header>
 
+  <!-- Regulatory Logic Inspector Ribbon -->
+  <section class="logic-inspector-bar" aria-label="Malaysian Regulatory Logics Engine">
+    <div class="container logic-inspector-container">
+      <div class="logic-inspector-title">
+        <span class="pulse-indicator"></span>
+        <span>LHDN Regulatory Logics Active:</span>
+      </div>
+      <div class="logic-inspector-pills-row">
+        <button class="logic-pill" onclick="openLogicModal('HR-01')">HR-01: Phasing Mandates</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-02')">HR-02: RM3M Threshold</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-03')">HR-03: Group Carve-Out</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-04')">HR-04: 72h Cancel Window</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-07')">HR-07: RM10k Single-Tx Rule</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-09')">HR-09: 7-Day Consolidation</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-11')">HR-11: Self-Billed Triggers</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-13')">HR-13: General TINs</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-14')">HR-14: UUID Linkage</button>
+        <button class="logic-pill" onclick="openLogicModal('HR-17')">HR-17: SVDP Voluntary</button>
+        <button class="logic-pill" style="background: var(--color-accent); color: var(--color-primary); font-weight: 800;" onclick="openLogicModal('all')">📋 View All 18 Logics Matrix</button>
+      </div>
+    </div>
+  </section>
+
   <!-- Workspace Sub-Header & 4 Top Main Tabs -->
   <div class="workspace-top-bar">
     <div class="container workspace-bar-inner">
@@ -84,6 +107,75 @@
          =================================================================== -->
     <div id="tab-live-demo" class="tab-content-panel active">
       
+      <!-- Interactive Regulatory Simulation Toolbox -->
+      <div class="simulation-toolbox-card">
+        <div class="simulation-toolbox-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.25rem;">🧪</span>
+              <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--color-heading); margin: 0;">Interactive Regulatory Simulation Toolbox</h3>
+              <span class="tab-badge-num" style="background: #E0E7FF; color: #3730A3;">Live Engine Controls</span>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--color-muted); margin: 4px 0 0 0;">
+              Toggle real-world statutory scenarios to observe how Dyau.ai automatically adapts validations, thresholds, and outputs.
+            </p>
+          </div>
+          <button class="btn btn-outline" style="padding: 5px 12px; font-size: 0.78rem;" onclick="openLogicModal('all')">
+            Inspect 18 Rule Specs ➔
+          </button>
+        </div>
+
+        <div class="simulation-toolbox-grid">
+          <!-- Control 1: Transaction Value & HR-07 -->
+          <div class="sim-control-box">
+            <div>
+              <label>1. Value & Consolidation (<button class="logic-pill" style="padding: 1px 5px; font-size: 0.68rem;" onclick="openLogicModal('HR-07')">HR-07</button>)</label>
+              <div style="font-size: 0.72rem; color: var(--color-body); margin-bottom: 8px;">Single transaction RM10,000 threshold</div>
+            </div>
+            <div class="sim-toggle-btn-group">
+              <button class="sim-toggle-btn active" data-sim="amount" data-val="standard">Standard (RM9,720)</button>
+              <button class="sim-toggle-btn" data-sim="amount" data-val="high_value">High-Val (RM15,120 ⚠️)</button>
+            </div>
+          </div>
+
+          <!-- Control 2: 72-Hour Legal Window & HR-04 -->
+          <div class="sim-control-box">
+            <div>
+              <label>2. 72-Hour Legal Window (<button class="logic-pill" style="padding: 1px 5px; font-size: 0.68rem;" onclick="openLogicModal('HR-04')">HR-04</button>)</label>
+              <div style="font-size: 0.72rem; color: var(--color-body); margin-bottom: 8px;">Elapsed time from validation timestamp</div>
+            </div>
+            <div class="sim-toggle-btn-group">
+              <button class="sim-toggle-btn active" data-sim="72h" data-val="within">Within 24.5h (Cancel OK)</button>
+              <button class="sim-toggle-btn" data-sim="72h" data-val="expired">Expired 78.2h (Locked 🔒)</button>
+            </div>
+          </div>
+
+          <!-- Control 3: Regulatory Program & HR-17/18 -->
+          <div class="sim-control-box">
+            <div>
+              <label>3. Regulatory Program (<button class="logic-pill" style="padding: 1px 5px; font-size: 0.68rem;" onclick="openLogicModal('HR-17')">HR-17</button>)</label>
+              <div style="font-size: 0.72rem; color: var(--color-body); margin-bottom: 8px;">Voluntary amnesty vs 2026 production</div>
+            </div>
+            <div class="sim-toggle-btn-group">
+              <button class="sim-toggle-btn active" data-sim="svdp" data-val="false">Standard 2026</button>
+              <button class="sim-toggle-btn" data-sim="svdp" data-val="true">SVDP 1.2 Track 🛡️</button>
+            </div>
+          </div>
+
+          <!-- Control 4: Entity Exemption & HR-02/03 -->
+          <div class="sim-control-box">
+            <div>
+              <label>4. Group Carve-Out (<button class="logic-pill" style="padding: 1px 5px; font-size: 0.68rem;" onclick="openLogicModal('HR-03')">HR-03</button>)</label>
+              <div style="font-size: 0.72rem; color: var(--color-body); margin-bottom: 8px;">Anti-avoidance group turnover override</div>
+            </div>
+            <div class="sim-toggle-btn-group">
+              <button class="sim-toggle-btn active" data-sim="group" data-val="false">Standalone Enterprise</button>
+              <button class="sim-toggle-btn" data-sim="group" data-val="true">Subsidiary Carve-Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Document Type Selector -->
       <section class="doc-selector-container">
         <div class="doc-selector-header">
@@ -179,6 +271,29 @@
             <p style="font-size: 0.92rem; color: var(--color-body); margin-bottom: 20px;">
               The Dyau.ai platform receives transaction data from your existing billing, ERP, or accounting system without requiring re-platforming. Below is the received payload and its organized business summary.
             </p>
+
+            <!-- Stage 1 Active Statutory Logics Callout -->
+            <div class="logic-callout-card" style="margin-bottom: 20px;">
+              <div class="logic-callout-header">
+                <span class="logic-callout-badge">Stage 1 Active Logics</span>
+                <span style="font-size: 0.8rem; color: var(--color-secondary); font-weight: 700;">Ingestion & Statutory Classification</span>
+              </div>
+              <div class="logic-callout-grid">
+                <div class="logic-callout-item">
+                  <span class="item-title"><button class="logic-pill" onclick="openLogicModal('HR-07')">HR-07: RM10k Single-Tx Rule</button></span>
+                  <span class="item-desc">Transactions exceeding RM10,000 are barred from monthly consolidation and require immediate individual e-Invoicing.</span>
+                </div>
+                <div class="logic-callout-item">
+                  <span class="item-title"><button class="logic-pill" onclick="openLogicModal('HR-11')">HR-11: Self-Billed Invoicing</button></span>
+                  <span class="item-desc">Buyer assumes issuer role and applies enterprise HSM digital signature for agent/foreign vendor settlements.</span>
+                </div>
+                <div class="logic-callout-item">
+                  <span class="item-title"><button class="logic-pill" onclick="openLogicModal('HR-13')">HR-13: Standard General TINs</button></span>
+                  <span class="item-desc">Automatic resolution to EI00000000010 (B2C consumers) or EI00000000020/030 for non-resident cross-border parties.</span>
+                </div>
+              </div>
+            </div>
+
 
             <div class="payload-grid">
               <!-- Left: Raw JSON Payload -->
@@ -285,7 +400,7 @@
               <div class="check-card">
                 <div class="check-card-header">
                   <span class="check-status-badge">✓ Passed</span>
-                  <h5>1. Schema & Structure</h5>
+                  <h5>1. Schema & Structure <button class="logic-pill" style="font-size: 0.68rem; margin-left: 6px;" onclick="openLogicModal('HR-06')">HR-06</button></h5>
                 </div>
                 <p>
                   Mandatory data fields, date formats, and document codes meet official Malaysian tax standards. No missing supplier or buyer identifiers.
@@ -295,7 +410,7 @@
               <div class="check-card">
                 <div class="check-card-header">
                   <span class="check-status-badge">✓ Passed</span>
-                  <h5>2. Arithmetic & Tax Logic</h5>
+                  <h5>2. Arithmetic & Tax Logic <button class="logic-pill" style="font-size: 0.68rem; margin-left: 6px;" onclick="openLogicModal('HR-10')">8% SST</button></h5>
                 </div>
                 <p>
                   Line totals, quantity multiplications, SST percentage rates (8%), and tax exemption codes recalculate with zero discrepancy.
@@ -305,7 +420,7 @@
               <div class="check-card">
                 <div class="check-card-header">
                   <span class="check-status-badge">✓ Passed</span>
-                  <h5>3. Digital Identity Verification</h5>
+                  <h5>3. Digital Identity Verification <button class="logic-pill" style="font-size: 0.68rem; margin-left: 6px;" onclick="openLogicModal('HR-13')">HR-13</button></h5>
                 </div>
                 <p>
                   Tax Identification Number (TIN) and Business Registration Number (BRN) structures verified against national registry algorithms.
@@ -356,7 +471,7 @@
               </p>
 
               <div style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; padding: 8px 18px; border-radius: var(--radius-full); border: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-heading);">
-                <span>📡 Protocol: HTTPS REST / Signed Payload</span>
+                <span>📡 Protocol: HTTPS REST / Signed Payload • <button class="logic-pill" style="font-size: 0.72rem; padding: 2px 6px;" onclick="openLogicModal('HR-12')">HR-12: X.509 HSM Signed</button></span>
                 <span style="color: var(--color-border);">|</span>
                 <span style="color: #059669; font-weight: 700;">Status: Awaiting Clearance Response</span>
               </div>
@@ -408,6 +523,27 @@
               </div>
             </div>
 
+            <!-- 72-Hour Legal Window & Adjustment Rule Callout -->
+            <div class="logic-callout-card" style="margin-bottom: 24px;">
+              <div class="logic-callout-header">
+                <span class="logic-callout-badge" style="background: #FEF3C7; color: #92400E;">Lifecycle Governance</span>
+                <span style="font-size: 0.8rem; color: var(--color-secondary); font-weight: 700;">Section 82C ITA 1967 Compliance</span>
+              </div>
+              <div class="logic-callout-grid">
+                <div class="logic-callout-item">
+                  <span class="item-title"><button class="logic-pill" onclick="openLogicModal('HR-04')">HR-04: 72.0-Hour Cancellation Window</button></span>
+                  <span class="item-desc">Issuers or buyers can cancel/reject within 72h. Past 72h, the cancel API returns HTTP 400 Bad Request; transactions can only be adjusted via linked Credit Note (02).</span>
+                </div>
+                <div class="logic-callout-item">
+                  <span class="item-title"><button class="logic-pill" onclick="openLogicModal('HR-14')">HR-14: Mandatory Original UUID Linkage</button></span>
+                  <span class="item-desc">All Credit Notes (02), Debit Notes (03), and Refund Notes (04) must embed the verified 36-character UUID of the original cleared invoice.</span>
+                </div>
+                <div class="logic-callout-item">
+                  <span class="item-title"><button class="logic-pill" onclick="openLogicModal('HR-15')">HR-15: Non-Adjustable Cancelled Docs</button></span>
+                  <span class="item-desc">Adjustments cannot be issued against cancelled or rejected documents; only Valid cleared documents permit linked notes.</span>
+                </div>
+              </div>
+            </div>
             <!-- Dynamic Outcome Banner -->
             <div id="outcome-detail-banner" class="outcome-detail-banner res-success">
               <div class="outcome-banner-header">
@@ -1013,6 +1149,16 @@
           Save Master Record
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- Regulatory Logics Modal Inspector Overlay -->
+  <div id="logic-modal-overlay" class="modal-overlay">
+    <div class="logic-modal-card">
+      <button id="btn-close-logic-modal" class="modal-close-btn" aria-label="Close Inspector">&times;</button>
+      <div id="logic-modal-dynamic-content">
+        <!-- Dynamically rendered by openLogicModal(logicKey) -->
+      </div>
     </div>
   </div>
 

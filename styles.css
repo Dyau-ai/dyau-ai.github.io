@@ -2446,3 +2446,279 @@ input:checked + .slider:before {
   .step-circle { margin-bottom: 0; }
   .kpi-metrics-grid { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   ACTIVE BUSINESS LOGICS & REGULATORY INSPECTOR SYSTEM
+   ========================================================================== */
+
+/* Logic Inspector Top Bar */
+.logic-inspector-bar {
+  background: linear-gradient(135deg, var(--color-primary), #0D2852);
+  color: #FFFFFF;
+  border-bottom: 2px solid var(--color-accent);
+  padding: 12px 0;
+  box-shadow: 0 4px 12px rgba(0, 32, 76, 0.25);
+}
+
+.logic-inspector-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logic-inspector-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.logic-inspector-title span.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  display: inline-block;
+  animation: pulseDot 2s infinite;
+}
+
+.logic-badges-scroller {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  max-width: 820px;
+  padding: 2px 0;
+}
+
+/* Logic Badge Pills */
+.logic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(201, 210, 224, 0.3);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.logic-pill:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.logic-pill.active {
+  background: var(--color-accent);
+  color: var(--color-primary);
+  border-color: var(--color-accent);
+}
+
+.logic-pill-code {
+  background: rgba(0, 32, 76, 0.4);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.logic-pill.active .logic-pill-code {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+/* Category Variations */
+.pill-regulatory { border-color: rgba(40, 197, 216, 0.5); }
+.pill-threshold { border-color: rgba(245, 158, 11, 0.6); color: #FDE68A; }
+.pill-selfbilled { border-color: rgba(167, 139, 250, 0.6); color: #DDD6FE; }
+.pill-lifecycle { border-color: rgba(52, 211, 153, 0.6); color: #A7F3D0; }
+.pill-svdp { border-color: rgba(56, 189, 248, 0.6); color: #BAE6FD; }
+
+/* In-Content Logic Callout Cards */
+.logic-callout-card {
+  background: #FFFFFF;
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  box-shadow: var(--shadow-sm);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-top: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.logic-callout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.logic-callout-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--color-heading);
+}
+
+.logic-callout-rule-ref {
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  font-weight: 700;
+  background: var(--bg-muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
+.logic-callout-desc {
+  font-size: 0.82rem;
+  color: var(--color-body);
+  line-height: 1.5;
+}
+
+/* Simulation Controls Toolbox */
+.simulation-toolbox-card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.simulation-toolbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.simulation-toolbox-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.sim-control-box {
+  background: var(--bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sim-control-box label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.sim-toggle-btn-group {
+  display: flex;
+  gap: 4px;
+}
+
+.sim-toggle-btn {
+  flex: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 5px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-slate);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.sim-toggle-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-heading);
+}
+
+.sim-toggle-btn.active {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+}
+
+/* Logic Details Modal */
+.logic-modal-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  max-width: 640px;
+  width: 100%;
+  padding: 32px;
+  position: relative;
+  box-shadow: var(--shadow-xl);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.logic-modal-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+}
+
+.logic-modal-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-heading);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.logic-spec-row {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.logic-spec-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.logic-spec-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.logic-spec-body {
+  font-size: 0.88rem;
+  color: var(--color-body);
+  line-height: 1.6;
+}
+
