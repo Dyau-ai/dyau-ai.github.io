@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malaysia e-Invoicing Live Demonstration | Dyau.ai</title>
+  <title>Malaysia e-Invoicing SaaS Platform | Dyau.ai Workspace</title>
+  <meta name="description" content="Interactive enterprise demonstration of Dyau.ai's Malaysia e-Invoicing SaaS platform: Live End-to-End Demo, Master Data Maintenance, Compliance Reporting, and Administration.">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" type="image/png" href="images/dyau-logo.png">
+  <link rel="icon" type="image/png" href="dyaulogo.png">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
     <div class="container nav-container">
       <a href="index.html" class="brand-wrapper">
         <div class="brand-logo-mark" aria-hidden="true">
-          <img src="images/dyau-logo.png" alt="Dyau.ai" class="brand-logo-img">
+          <img src="dyaulogo.png" alt="Dyau.ai" class="brand-logo-img">
         </div>
         <div class="brand-text">
           <span class="brand-title">Dyau.ai</span>
@@ -26,587 +27,997 @@
 
       <ul class="nav-menu">
         <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="index.html#about" class="nav-link">About Us</a></li>
         <li><a href="index.html#demo-hub" class="nav-link">Demo Hub</a></li>
-        <li><a href="e-invoicing.html" class="nav-link active">e-Invoicing Live Demo</a></li>
-        <li><a href="mailto:contact@dyau.ai?subject=Request%20Full%20Enterprise%20Demo" class="nav-cta">Contact Enterprise Team</a></li>
+        <li><a href="e-invoicing.html" class="nav-link active">e-Invoicing Platform</a></li>
+        <li><a href="mailto:contact@dyau.ai?subject=Request%20Full%20Enterprise%20Trial" class="nav-cta">Contact Enterprise Team</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- Demo Control Toolbar -->
-  <div class="demo-toolbar">
-    <div class="container toolbar-container">
-      <div class="toolbar-title-group">
-        <h2>Malaysia e-Invoicing Interactive Live Demo</h2>
-        <span>LHDN MyInvois Continuous Clearance Simulation • Customer Demonstration</span>
+  <!-- Workspace Sub-Header & 4 Top Main Tabs -->
+  <div class="workspace-top-bar">
+    <div class="container workspace-bar-inner">
+      <div class="workspace-identity">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--color-heading);">
+          Malaysia e-Invoicing Compliance Platform
+        </h2>
+        <span class="workspace-badge-pill">LHDN MyInvois Ready</span>
       </div>
-      <div class="toolbar-actions">
+
+      <div class="ws-user-status">
+        <div class="ws-role-pill">
+          <span>👤 Role:</span>
+          <strong>Tax Approver (Enterprise Admin)</strong>
+        </div>
         <button id="btn-reset-demo" class="btn btn-reset">↺ Reset Demo</button>
-        <a href="index.html#demo-hub" class="btn btn-outline" style="font-size: 0.85rem; padding: 6px 14px;">← Back to Demo Hub</a>
       </div>
+
+      <!-- 4 Top Main Tabs -->
+      <nav class="workspace-tabs-nav" aria-label="Workspace Sections">
+        <button class="ws-tab-btn active" data-tab="tab-live-demo">
+          <span>⚡</span>
+          <span>Tab 1: Live End-to-End Demo</span>
+        </button>
+        <button class="ws-tab-btn" data-tab="tab-master-data">
+          <span>👥</span>
+          <span>Tab 2: Master Data – Customer / Party</span>
+          <span class="tab-badge-num">6</span>
+        </button>
+        <button class="ws-tab-btn" data-tab="tab-reporting">
+          <span>📊</span>
+          <span>Tab 3: Reporting Dashboard</span>
+          <span class="tab-badge-num">Live</span>
+        </button>
+        <button class="ws-tab-btn" data-tab="tab-administration">
+          <span>⚙️</span>
+          <span>Tab 4: Administration (Simplified)</span>
+        </button>
+      </nav>
     </div>
   </div>
 
   <main class="container" style="padding-bottom: 80px;">
 
     <!-- ===================================================================
-         PART A: DOCUMENT TYPE SELECTOR
+         TAB 1: LIVE END-TO-END DEMO
          =================================================================== -->
-    <section class="doc-selector-container">
-      <div class="doc-selector-header">
-        <div>
-          <span class="section-tag" style="margin-bottom: 4px;">Step A • Select Transaction Type</span>
-          <h3 class="doc-selector-title">Supported Document Types</h3>
-        </div>
-        <!-- 5 Document Type Tabs -->
-        <div class="doc-type-pills">
-          <button class="doc-type-btn active" data-type="invoice">
-            <span>📄</span>
-            <span>Invoice (01)</span>
-          </button>
-          <button class="doc-type-btn" data-type="credit_note">
-            <span>📉</span>
-            <span>Credit Note (02)</span>
-          </button>
-          <button class="doc-type-btn" data-type="debit_note">
-            <span>📈</span>
-            <span>Debit Note (03)</span>
-          </button>
-          <button class="doc-type-btn" data-type="refund_note">
-            <span>🔄</span>
-            <span>Refund Note (04)</span>
-          </button>
-          <button class="doc-type-btn self-billed-btn" data-type="self_billed">
-            <span>⚡</span>
-            <span>Self-billed Invoice (11)</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Nature Alert (Highlights standard vs self-billed difference) -->
-      <div id="doc-nature-alert" class="doc-nature-alert">
-        <span style="font-size: 1.2rem;">ℹ️</span>
-        <div>
-          <strong>Standard Commercial Document (Doc Code: 01):</strong> The Supplier/Seller generates the document and delivers clearance to the Buyer via LHDN MyInvois.
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================
-         PART B: INTERACTIVE END-TO-END FLOW WITH PROGRESS STEPPER
-         =================================================================== -->
-    <section class="stepper-container">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <span class="section-tag" style="margin: 0;">Step B • End-to-End Live Journey</span>
-        <span style="font-size: 0.82rem; color: var(--text-muted);">Click any step to preview or use the action buttons below</span>
-      </div>
-
-      <!-- Progress Track & Fill -->
-      <div class="stepper-progress-bar-wrapper">
-        <div class="stepper-progress-track">
-          <div id="stepper-progress-fill" class="stepper-progress-fill"></div>
-        </div>
-      </div>
-
-      <!-- 5 Numbered Stepper Buttons -->
-      <div class="stepper-steps-row">
-        <div class="stepper-step active" data-step="1">
-          <div class="step-circle">1</div>
-          <span class="step-label">Data Arrival</span>
-        </div>
-        <div class="stepper-step" data-step="2">
-          <div class="step-circle">2</div>
-          <span class="step-label">Data Stored</span>
-        </div>
-        <div class="stepper-step" data-step="3">
-          <div class="step-circle">3</div>
-          <span class="step-label">Platform Checks</span>
-        </div>
-        <div class="stepper-step" data-step="4">
-          <div class="step-circle">4</div>
-          <span class="step-label">Submission</span>
-        </div>
-        <div class="stepper-step" data-step="5">
-          <div class="step-circle">5</div>
-          <span class="step-label">Validation Result</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================
-         INTERACTIVE STEP STAGES (1 TO 5)
-         =================================================================== -->
-    <div id="step-stage-card" class="step-stage-card">
-
-      <!-- ---------------------------------------------------------------
-           STAGE 1: DATA ARRIVAL
-           --------------------------------------------------------------- -->
-      <div id="step-panel-1" class="step-stage-panel">
-        <div class="step-stage-header">
-          <div class="step-stage-title-wrap">
-            <h3>Stage 1: Invoice Data Arrives from Source System</h3>
-            <p>Raw REST-style payload intake + clean business summary</p>
+    <div id="tab-live-demo" class="tab-content-panel active">
+      
+      <!-- Document Type Selector -->
+      <section class="doc-selector-container">
+        <div class="doc-selector-header">
+          <div>
+            <span class="section-tag" style="margin-bottom: 4px;">Step A • Select Transaction Type</span>
+            <h3 class="doc-selector-title">Supported Document Types</h3>
           </div>
-          <div class="badge-live">Incoming Stream Active</div>
-        </div>
-
-        <div class="step-stage-body">
-          <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 20px;">
-            The Dyau.ai platform receives transaction data from your existing billing, ERP, or accounting system without requiring re-platforming. Below is the received payload and its organized business summary.
-          </p>
-
-          <div class="payload-grid">
-            <!-- Left: Raw JSON Payload -->
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 0.8rem; font-weight: 700; color: var(--navy-900);">REST API Ingestion Payload (JSON)</span>
-                <span style="font-size: 0.75rem; color: var(--teal-600); font-weight: 600;">Content-Type: application/json</span>
-              </div>
-              <div id="json-payload-display" class="payload-json-box">
-                <!-- Populated dynamically via JS -->
-              </div>
-            </div>
-
-            <!-- Right: Grouped Summary of Key Fields -->
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 0.8rem; font-weight: 700; color: var(--navy-900);">Clean Grouped Business Summary</span>
-                <span style="font-size: 0.75rem; color: var(--text-muted);">Parsed Fields</span>
-              </div>
-              <div id="summary-grouped-display" class="summary-grouped-box">
-                <!-- Populated dynamically via JS -->
-              </div>
-            </div>
-          </div>
-
-          <!-- Stage 1 Action Bar -->
-          <div class="step-action-bar">
-            <div class="step-info-hint">
-              <span>💡</span>
-              <span>Click “Receive Data” to safely store and queue the transaction.</span>
-            </div>
-            <button id="btn-step-1" class="btn btn-proceed">Receive Data →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ---------------------------------------------------------------
-           STAGE 2: DATA STORED
-           --------------------------------------------------------------- -->
-      <div id="step-panel-2" class="step-stage-panel" style="display: none;">
-        <div class="step-stage-header">
-          <div class="step-stage-title-wrap">
-            <h3>Stage 2: Safe Storage & Queue Confirmation</h3>
-            <p>Encrypted data intake and compliant persistence</p>
-          </div>
-          <span class="val-official-pill" style="background: rgba(255,255,255,0.2);">Storage Verified</span>
-        </div>
-
-        <div class="step-stage-body">
-          <div class="stored-confirm-box">
-            <div class="stored-icon">✓</div>
-            <h4>Data Safely Ingested & Secured</h4>
-            <p>
-              The transaction has been encrypted and committed to the compliant intake queue with full traceability. Your source system receives instant confirmation of receipt.
-            </p>
-
-            <div class="stored-meta-grid">
-              <div class="stored-meta-item">
-                <div class="stored-meta-label">Intake Reference ID</div>
-                <div class="stored-meta-val" id="stored-intake-id">INTAKE-2026-099412</div>
-              </div>
-              <div class="stored-meta-item">
-                <div class="stored-meta-label">Document Number</div>
-                <div class="stored-meta-val" id="stored-doc-no">INV-2026-00128</div>
-              </div>
-              <div class="stored-meta-item">
-                <div class="stored-meta-label">Document Classification</div>
-                <div class="stored-meta-val" id="stored-doc-type">Invoice (Code: 01)</div>
-              </div>
-              <div class="stored-meta-item">
-                <div class="stored-meta-label">Total Payable</div>
-                <div class="stored-meta-val" id="stored-doc-total" style="color: var(--teal-600);">MYR 9,720.00</div>
-              </div>
-              <div class="stored-meta-item">
-                <div class="stored-meta-label">Intake Timestamp</div>
-                <div class="stored-meta-val">10 Oct 2026, 12:49:32 MYT</div>
-              </div>
-              <div class="stored-meta-item">
-                <div class="stored-meta-label">Encryption Level</div>
-                <div class="stored-meta-val" style="color: #059669;">TLS 1.3 / AES-256</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Stage 2 Action Bar -->
-          <div class="step-action-bar">
-            <div class="step-info-hint">
-              <span>💡</span>
-              <span>Data is safe. Ready to perform automated compliance validations.</span>
-            </div>
-            <button id="btn-step-2" class="btn btn-proceed">Process Document →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ---------------------------------------------------------------
-           STAGE 3: PLATFORM CHECKS
-           --------------------------------------------------------------- -->
-      <div id="step-panel-3" class="step-stage-panel" style="display: none;">
-        <div class="step-stage-header">
-          <div class="step-stage-title-wrap">
-            <h3>Stage 3: Pre-Submission Platform Checks</h3>
-            <p>Automated verification before sending to LHDN MyInvois</p>
-          </div>
-          <span class="val-official-pill" style="background: rgba(255,255,255,0.2);">3 / 3 Passed</span>
-        </div>
-
-        <div class="step-stage-body">
-          <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 20px;">
-            The platform automatically screens every invoice against official tax rules before transmission. This prevents rejection penalties and ensures first-time clearance.
-          </p>
-
-          <div class="checks-grid">
-            <!-- Check 1 -->
-            <div class="check-card">
-              <div class="check-card-header">
-                <span class="check-status-badge">✓ Passed</span>
-                <h5>1. Schema & Structure</h5>
-              </div>
-              <p>
-                Mandatory data fields, date formats, and document codes meet official Malaysian tax standards. No missing supplier or buyer identifiers.
-              </p>
-            </div>
-
-            <!-- Check 2 -->
-            <div class="check-card">
-              <div class="check-card-header">
-                <span class="check-status-badge">✓ Passed</span>
-                <h5>2. Arithmetic & Tax Logic</h5>
-              </div>
-              <p>
-                Line totals, quantity multiplications, SST percentage rates (8%), and tax exemption codes recalculate with zero discrepancy.
-              </p>
-            </div>
-
-            <!-- Check 3 -->
-            <div class="check-card">
-              <div class="check-card-header">
-                <span class="check-status-badge">✓ Passed</span>
-                <h5>3. Digital Identity Verification</h5>
-              </div>
-              <p>
-                Tax Identification Number (TIN) and Business Registration Number (BRN) structures verified against national registry algorithms.
-              </p>
-            </div>
-          </div>
-
-          <!-- Stage 3 Action Bar -->
-          <div class="step-action-bar">
-            <div class="step-info-hint">
-              <span>💡</span>
-              <span>All automated checks passed. Ready for official clearance submission.</span>
-            </div>
-            <button id="btn-step-3" class="btn btn-proceed">Submit to LHDN MyInvois →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ---------------------------------------------------------------
-           STAGE 4: SUBMISSION
-           --------------------------------------------------------------- -->
-      <div id="step-panel-4" class="step-stage-panel" style="display: none;">
-        <div class="step-stage-header">
-          <div class="step-stage-title-wrap">
-            <h3>Stage 4: Document Submission in Progress</h3>
-            <p>Simulating secure transmission to LHDN MyInvois Gateway</p>
-          </div>
-          <div class="badge-live">Connecting to Government API</div>
-        </div>
-
-        <div class="step-stage-body">
-          <div class="submission-simulation-box">
-            <div class="submission-pulse-graphic">
-              <div class="sys-node">Dyau.ai Compliance Gateway</div>
-              <div class="pulse-arrow">
-                <div class="pulse-dot"></div>
-                <div class="pulse-dot"></div>
-                <div class="pulse-dot"></div>
-                <span>➔</span>
-              </div>
-              <div class="sys-node" style="border-color: var(--teal-600); background: var(--teal-50);">
-                LHDN MyInvois API Gateway
-              </div>
-            </div>
-
-            <h4 style="font-size: 1.25rem; color: var(--navy-900); margin-bottom: 8px;">
-              Document Transmitted for Official Clearance
-            </h4>
-            <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 580px; margin: 0 auto 24px auto;">
-              The digital invoice payload has been signed and delivered to LHDN. The government clearance engine verifies tax registration and assigns the legal status.
-            </p>
-
-            <div style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; padding: 8px 18px; border-radius: var(--radius-full); border: 1px solid var(--border-light); font-size: 0.85rem; color: var(--navy-850);">
-              <span>📡 Protocol: HTTPS REST / Signed Payload</span>
-              <span style="color: var(--border-light);">|</span>
-              <span style="color: #059669; font-weight: 600;">Status: Awaiting Clearance Response</span>
-            </div>
-          </div>
-
-          <!-- Stage 4 Action Bar -->
-          <div class="step-action-bar">
-            <div class="step-info-hint">
-              <span>💡</span>
-              <span>Click below to query and inspect the official regulatory clearance result.</span>
-            </div>
-            <button id="btn-step-4" class="btn btn-proceed">Get Validation Result →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ---------------------------------------------------------------
-           STAGE 5: VALIDATION RESULT – USER CHOICE
-           --------------------------------------------------------------- -->
-      <div id="step-panel-5" class="step-stage-panel" style="display: none;">
-        <div class="step-stage-header">
-          <div class="step-stage-title-wrap">
-            <h3>Stage 5: Validation Result & Outcome Exploration</h3>
-            <p>Select any outcome button to test how the platform handles various real-world scenarios</p>
-          </div>
-          <span class="val-official-pill" style="background: rgba(255,255,255,0.2);">Interactive Outcome Mode</span>
-        </div>
-
-        <div class="step-stage-body">
-          
-          <!-- Outcome Choice Buttons -->
-          <div class="outcome-selector-area">
-            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--navy-900); margin-bottom: 10px;">
-              Choose a scenario to see how Dyau.ai responds:
-            </label>
-            <div class="outcome-buttons-grid">
-              <!-- Success -->
-              <div class="outcome-choice-btn choice-success active" data-outcome="success">
-                <span class="outcome-status-title" style="color: var(--status-success);">🟢 Success (Valid)</span>
-                <span class="outcome-choice-desc">Cleared by LHDN • Official UUID & QR issued</span>
-              </div>
-              <!-- On Hold -->
-              <div class="outcome-choice-btn choice-hold" data-outcome="hold">
-                <span class="outcome-status-title" style="color: var(--status-hold);">🟡 On Hold</span>
-                <span class="outcome-choice-desc">Buyer TIN pending sync • Queued for re-try</span>
-              </div>
-              <!-- Rejected -->
-              <div class="outcome-choice-btn choice-rejected" data-outcome="rejected">
-                <span class="outcome-status-title" style="color: var(--status-rejected);">🔴 Rejected</span>
-                <span class="outcome-choice-desc">Tax exemption mismatch • 1-click fix</span>
-              </div>
-              <!-- Cancelled -->
-              <div class="outcome-choice-btn choice-cancelled" data-outcome="cancelled">
-                <span class="outcome-status-title" style="color: var(--status-cancelled);">⚪ Cancelled</span>
-                <span class="outcome-choice-desc">Withdrawn by issuer within 72h window</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dynamic Outcome Detail Banner -->
-          <div id="outcome-detail-banner" class="outcome-detail-banner res-success">
-            <div class="outcome-banner-header">
-              <h4 id="outcome-banner-title" class="outcome-banner-title">
-                LHDN MyInvois Clearance: VALID (Code: 200 OK)
-              </h4>
-              <span class="badge-live" style="background: rgba(5, 150, 105, 0.2); color: #065F46;">Legal Clearance Confirmed</span>
-            </div>
-            <p id="outcome-banner-text" class="outcome-banner-text">
-              The document passed all 4 layers of validation (schema integrity, arithmetic consistency, tax rate conformity, and registry lookup). Official UUID and QR link generated.
-            </p>
-          </div>
-
-          <!-- =============================================================
-               STAGE 6 / FINAL OUTPUT (Only rendered on SUCCESS)
-               ============================================================= -->
-          <div id="final-output-area" class="final-output-area">
-
-            <!-- Validated Invoice Card -->
-            <div id="validated-invoice-card" class="validated-invoice-card">
-              <div class="val-card-top-bar">
-                <div class="val-header-info">
-                  <h4 id="val-card-title">Validated e-Invoice: INV-2026-00128</h4>
-                  <span>Government Clearance Certified • Ready for Commercial Settlement</span>
-                </div>
-                <div class="val-badge-group">
-                  <span id="val-doc-type-pill" class="val-official-pill">LHDN Validated (01)</span>
-                </div>
-              </div>
-
-              <!-- Metadata Grid -->
-              <div class="val-meta-box">
-                <div class="val-meta-field">
-                  <span class="lbl">Government Assigned UUID</span>
-                  <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
-                    <span id="val-uuid-display" class="val">7F4B92E1-4921-48C9-A780-B149E0832DE8</span>
-                    <button id="btn-copy-uuid" class="btn" style="padding: 2px 8px; font-size: 0.72rem; background: #FFFFFF; border: 1px solid var(--border-light); color: var(--navy-850);" title="Copy UUID">Copy</button>
-                  </div>
-                </div>
-                <div class="val-meta-field">
-                  <span class="lbl">Official Validation Timestamp</span>
-                  <span class="val">10 October 2026, 12:49:58 MYT</span>
-                </div>
-                <div class="val-meta-field">
-                  <span class="lbl">Document Reference Number</span>
-                  <span id="val-doc-no" class="val">INV-2026-00128</span>
-                </div>
-                <div class="val-meta-field">
-                  <span class="lbl">Total Cleared Amount</span>
-                  <span id="val-grand-total" class="val" style="color: var(--teal-600);">MYR 9,720.00</span>
-                </div>
-              </div>
-
-              <!-- Line Items Table -->
-              <div class="val-table-wrap">
-                <table class="val-table">
-                  <thead>
-                    <tr>
-                      <th>Line Item Description</th>
-                      <th class="text-right">Qty</th>
-                      <th class="text-right">Unit Price</th>
-                      <th class="text-right">Tax (SST)</th>
-                      <th class="text-right">Line Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="val-table-body">
-                    <!-- Populated dynamically via JS -->
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colspan="4" class="text-right" style="padding-top: 14px; font-weight: 600;">Net Subtotal:</td>
-                      <td class="text-right" id="val-subtotal" style="padding-top: 14px; font-weight: 600;">MYR 9,000.00</td>
-                    </tr>
-                    <tr>
-                      <td colspan="4" class="text-right" style="font-weight: 600;">Service Tax (SST 8%):</td>
-                      <td class="text-right" id="val-tax" style="font-weight: 600;">MYR 720.00</td>
-                    </tr>
-                    <tr style="font-size: 1.05rem; font-weight: 800;">
-                      <td colspan="4" class="text-right" style="color: var(--navy-900); border-top: 2px solid var(--navy-900);">Grand Total:</td>
-                      <td class="text-right" id="val-final-total" style="color: var(--teal-600); border-top: 2px solid var(--navy-900);">MYR 9,720.00</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              <!-- Dummy QR Code Preview -->
-              <div id="qr-preview-box" class="qr-preview-box" title="Click to view simulated verification">
-                <div class="qr-box-inner">
-                  <svg viewBox="0 0 100 100" fill="#0B192C">
-                    <rect x="5" y="5" width="26" height="26" rx="4" fill="#0B192C"/>
-                    <rect x="9" y="9" width="18" height="18" rx="2" fill="#FFFFFF"/>
-                    <rect x="13" y="13" width="10" height="10" rx="1" fill="#0B192C"/>
-
-                    <rect x="69" y="5" width="26" height="26" rx="4" fill="#0B192C"/>
-                    <rect x="73" y="9" width="18" height="18" rx="2" fill="#FFFFFF"/>
-                    <rect x="77" y="13" width="10" height="10" rx="1" fill="#0B192C"/>
-
-                    <rect x="5" y="69" width="26" height="26" rx="4" fill="#0B192C"/>
-                    <rect x="9" y="73" width="18" height="18" rx="2" fill="#FFFFFF"/>
-                    <rect x="13" y="77" width="10" height="10" rx="1" fill="#0B192C"/>
-
-                    <rect x="36" y="8" width="8" height="8" fill="#14B8A6"/>
-                    <rect x="48" y="14" width="8" height="8" fill="#0B192C"/>
-                    <rect x="36" y="24" width="6" height="6" fill="#0B192C"/>
-                    <rect x="46" y="28" width="10" height="6" fill="#14B8A6"/>
-
-                    <rect x="8" y="38" width="6" height="8" fill="#0B192C"/>
-                    <rect x="18" y="42" width="8" height="6" fill="#14B8A6"/>
-                    <rect x="28" y="36" width="6" height="12" fill="#0B192C"/>
-                    <rect x="38" y="40" width="8" height="8" fill="#0B192C"/>
-                    <rect x="50" y="44" width="12" height="6" fill="#14B8A6"/>
-                    <rect x="66" y="38" width="8" height="8" fill="#0B192C"/>
-                    <rect x="78" y="42" width="14" height="6" fill="#0B192C"/>
-
-                    <rect x="36" y="56" width="10" height="8" fill="#14B8A6"/>
-                    <rect x="52" y="54" width="8" height="10" fill="#0B192C"/>
-                    <rect x="66" y="58" width="10" height="6" fill="#0B192C"/>
-                    <rect x="82" y="54" width="10" height="10" fill="#14B8A6"/>
-
-                    <rect x="38" y="72" width="8" height="8" fill="#0B192C"/>
-                    <rect x="50" y="76" width="12" height="6" fill="#14B8A6"/>
-                    <rect x="68" y="72" width="6" height="12" fill="#0B192C"/>
-                    <rect x="78" y="76" width="14" height="8" fill="#0B192C"/>
-                    <rect x="42" y="86" width="8" height="6" fill="#0B192C"/>
-                    <rect x="56" y="86" width="10" height="6" fill="#14B8A6"/>
-                    <rect x="72" y="88" width="8" height="6" fill="#0B192C"/>
-                  </svg>
-                </div>
-                <div class="qr-desc">
-                  <h5>Sample QR Code – Scan to Verify</h5>
-                  <p>When printed or embedded into customer PDF invoices, this QR code verifies authenticity on the official government tax portal.</p>
-                  <span class="qr-link-badge">Official URL: https://myinvois.hasil.gov.my/verify/...</span>
-                </div>
-              </div>
-
-              <div style="font-size: 0.75rem; color: var(--text-muted); text-align: center; font-style: italic;">
-                Demonstration sample only. All identifiers, company details, and QR codes are synthetic test data.
-              </div>
-            </div>
-
-            <!-- Two Side-by-Side Outputs -->
-            <div style="margin-top: 36px;">
-              <span class="section-tag">Downstream System Delivery</span>
-              <h4 style="font-size: 1.35rem; color: var(--navy-900); margin-bottom: 8px;">
-                Simulated Return to Your Source Systems
-              </h4>
-              <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px;">
-                Once clearance is complete, Dyau.ai automatically returns the official status and UUID to your business applications through either REST API or Batch File formats.
-              </p>
-
-              <div class="outputs-dual-grid">
-                <!-- Panel 1: REST API Response -->
-                <div class="output-panel">
-                  <div class="output-panel-header">
-                    <h5>
-                      <span>⚡</span>
-                      <span>Simulated REST API Response</span>
-                    </h5>
-                    <span class="panel-chip">HTTP 200 OK • JSON</span>
-                  </div>
-                  <div id="rest-api-response-display" class="output-code-container">
-                    <!-- Populated dynamically via JS -->
-                  </div>
-                </div>
-
-                <!-- Panel 2: Batch File Output -->
-                <div class="output-panel">
-                  <div class="output-panel-header">
-                    <h5>
-                      <span>📁</span>
-                      <span>Simulated Batch File Output</span>
-                    </h5>
-                    <span class="panel-chip">CSV / Delimited File</span>
-                  </div>
-                  <div id="batch-output-display" class="output-code-container" style="color: #67E8F9;">
-                    <!-- Populated dynamically via JS -->
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Stage 5 Action Bar -->
-          <div class="step-action-bar">
-            <div class="step-info-hint">
-              <span>💡</span>
-              <span>Test other document types or click "Reset Demo" to explore from the beginning.</span>
-            </div>
-            <button id="btn-reset-bottom" class="btn btn-secondary" style="background: var(--navy-900); color: #fff;" onclick="location.reload();">
-              ↺ Start Fresh Walkthrough
+          <!-- 5 Document Type Tabs -->
+          <div class="doc-type-pills">
+            <button class="doc-type-btn active" data-type="invoice">
+              <span>📄</span>
+              <span>Invoice (01)</span>
+            </button>
+            <button class="doc-type-btn" data-type="credit_note">
+              <span>📉</span>
+              <span>Credit Note (02)</span>
+            </button>
+            <button class="doc-type-btn" data-type="debit_note">
+              <span>📈</span>
+              <span>Debit Note (03)</span>
+            </button>
+            <button class="doc-type-btn" data-type="refund_note">
+              <span>🔄</span>
+              <span>Refund Note (04)</span>
+            </button>
+            <button class="doc-type-btn self-billed-btn" data-type="self_billed">
+              <span>⚡</span>
+              <span>Self-billed Invoice (11)</span>
             </button>
           </div>
+        </div>
 
+        <!-- Nature Alert -->
+        <div id="doc-nature-alert" class="doc-nature-alert">
+          <span style="font-size: 1.2rem;">ℹ️</span>
+          <div>
+            <strong>Standard Commercial Document (Doc Code: 01):</strong> The Supplier/Seller generates the document and delivers clearance to the Buyer via LHDN MyInvois.
+          </div>
+        </div>
+      </section>
+
+      <!-- Stepper Progress Tracker -->
+      <section class="stepper-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span class="section-tag" style="margin: 0;">Step B • End-to-End Live Journey</span>
+          <span style="font-size: 0.82rem; color: var(--color-muted);">Click any step to inspect or use the action buttons below</span>
+        </div>
+
+        <div class="stepper-progress-bar-wrapper">
+          <div class="stepper-progress-track">
+            <div id="stepper-progress-fill" class="stepper-progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="stepper-steps-row">
+          <div class="stepper-step active" data-step="1">
+            <div class="step-circle">1</div>
+            <span class="step-label">Data Arrival</span>
+          </div>
+          <div class="stepper-step" data-step="2">
+            <div class="step-circle">2</div>
+            <span class="step-label">Data Stored</span>
+          </div>
+          <div class="stepper-step" data-step="3">
+            <div class="step-circle">3</div>
+            <span class="step-label">Platform Checks</span>
+          </div>
+          <div class="stepper-step" data-step="4">
+            <div class="step-circle">4</div>
+            <span class="step-label">Submission</span>
+          </div>
+          <div class="stepper-step" data-step="5">
+            <div class="step-circle">5</div>
+            <span class="step-label">Validation Result</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Stage Container -->
+      <div id="step-stage-card" class="step-stage-card">
+
+        <!-- Stage 1: Data Arrival -->
+        <div id="step-panel-1" class="step-stage-panel">
+          <div class="step-stage-header">
+            <div class="step-stage-title-wrap">
+              <h3>Stage 1: Invoice Data Arrives from Source System</h3>
+              <p>Raw REST-style payload intake + clean business summary</p>
+            </div>
+            <div class="badge-live">Incoming Stream Active</div>
+          </div>
+
+          <div class="step-stage-body">
+            <p style="font-size: 0.92rem; color: var(--color-body); margin-bottom: 20px;">
+              The Dyau.ai platform receives transaction data from your existing billing, ERP, or accounting system without requiring re-platforming. Below is the received payload and its organized business summary.
+            </p>
+
+            <div class="payload-grid">
+              <!-- Left: Raw JSON Payload -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-heading);">REST API Ingestion Payload (JSON)</span>
+                  <span style="font-size: 0.75rem; color: var(--color-accent); font-weight: 600;">Content-Type: application/json</span>
+                </div>
+                <div id="json-payload-display" class="payload-json-box"></div>
+              </div>
+
+              <!-- Right: Grouped Summary -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-heading);">Clean Grouped Business Summary</span>
+                  <span style="font-size: 0.75rem; color: var(--color-muted);">Parsed Fields</span>
+                </div>
+                <div id="summary-grouped-display" class="summary-grouped-box"></div>
+              </div>
+            </div>
+
+            <div class="step-action-bar">
+              <div class="step-info-hint">
+                <span>💡</span>
+                <span>Click “Receive Data” to safely store and queue the transaction.</span>
+              </div>
+              <button id="btn-step-1" class="btn btn-proceed">Receive Data →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2: Data Stored -->
+        <div id="step-panel-2" class="step-stage-panel" style="display: none;">
+          <div class="step-stage-header">
+            <div class="step-stage-title-wrap">
+              <h3>Stage 2: Safe Storage & Queue Confirmation</h3>
+              <p>Encrypted data intake and compliant persistence</p>
+            </div>
+            <span class="val-official-pill" style="background: rgba(255,255,255,0.2);">Storage Verified</span>
+          </div>
+
+          <div class="step-stage-body">
+            <div class="stored-confirm-box">
+              <div class="stored-icon">✓</div>
+              <h4>Data Safely Ingested & Secured</h4>
+              <p>
+                The transaction has been encrypted and committed to the compliant intake queue with full traceability. Your source system receives instant confirmation of receipt.
+              </p>
+
+              <div class="stored-meta-grid">
+                <div class="stored-meta-item">
+                  <div class="stored-meta-label">Intake Reference ID</div>
+                  <div class="stored-meta-val" id="stored-intake-id">INTAKE-2026-099412</div>
+                </div>
+                <div class="stored-meta-item">
+                  <div class="stored-meta-label">Document Number</div>
+                  <div class="stored-meta-val" id="stored-doc-no">INV-2026-00128</div>
+                </div>
+                <div class="stored-meta-item">
+                  <div class="stored-meta-label">Document Classification</div>
+                  <div class="stored-meta-val" id="stored-doc-type">Invoice (Code: 01)</div>
+                </div>
+                <div class="stored-meta-item">
+                  <div class="stored-meta-label">Total Payable</div>
+                  <div class="stored-meta-val" id="stored-doc-total" style="color: var(--color-primary);">MYR 9,720.00</div>
+                </div>
+                <div class="stored-meta-item">
+                  <div class="stored-meta-label">Intake Timestamp</div>
+                  <div class="stored-meta-val">10 Oct 2026, 12:49:32 MYT</div>
+                </div>
+                <div class="stored-meta-item">
+                  <div class="stored-meta-label">Encryption Level</div>
+                  <div class="stored-meta-val" style="color: #059669;">TLS 1.3 / AES-256</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-action-bar">
+              <div class="step-info-hint">
+                <span>💡</span>
+                <span>Data is safe. Ready to perform automated compliance validations.</span>
+              </div>
+              <button id="btn-step-2" class="btn btn-proceed">Process Document →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3: Platform Checks -->
+        <div id="step-panel-3" class="step-stage-panel" style="display: none;">
+          <div class="step-stage-header">
+            <div class="step-stage-title-wrap">
+              <h3>Stage 3: Pre-Submission Platform Checks</h3>
+              <p>Automated verification before sending to LHDN MyInvois</p>
+            </div>
+            <span class="val-official-pill" style="background: rgba(255,255,255,0.2);">3 / 3 Passed</span>
+          </div>
+
+          <div class="step-stage-body">
+            <p style="font-size: 0.92rem; color: var(--color-body); margin-bottom: 20px;">
+              The platform automatically screens every invoice against official tax rules before transmission. This prevents rejection penalties and ensures first-time clearance.
+            </p>
+
+            <div class="checks-grid">
+              <div class="check-card">
+                <div class="check-card-header">
+                  <span class="check-status-badge">✓ Passed</span>
+                  <h5>1. Schema & Structure</h5>
+                </div>
+                <p>
+                  Mandatory data fields, date formats, and document codes meet official Malaysian tax standards. No missing supplier or buyer identifiers.
+                </p>
+              </div>
+
+              <div class="check-card">
+                <div class="check-card-header">
+                  <span class="check-status-badge">✓ Passed</span>
+                  <h5>2. Arithmetic & Tax Logic</h5>
+                </div>
+                <p>
+                  Line totals, quantity multiplications, SST percentage rates (8%), and tax exemption codes recalculate with zero discrepancy.
+                </p>
+              </div>
+
+              <div class="check-card">
+                <div class="check-card-header">
+                  <span class="check-status-badge">✓ Passed</span>
+                  <h5>3. Digital Identity Verification</h5>
+                </div>
+                <p>
+                  Tax Identification Number (TIN) and Business Registration Number (BRN) structures verified against national registry algorithms.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-action-bar">
+              <div class="step-info-hint">
+                <span>💡</span>
+                <span>All automated checks passed. Ready for official clearance submission.</span>
+              </div>
+              <button id="btn-step-3" class="btn btn-proceed">Submit to LHDN MyInvois →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 4: Submission -->
+        <div id="step-panel-4" class="step-stage-panel" style="display: none;">
+          <div class="step-stage-header">
+            <div class="step-stage-title-wrap">
+              <h3>Stage 4: Document Submission in Progress</h3>
+              <p>Simulating secure transmission to LHDN MyInvois Gateway</p>
+            </div>
+            <div class="badge-live">Connecting to Government API</div>
+          </div>
+
+          <div class="step-stage-body">
+            <div class="submission-simulation-box">
+              <div class="submission-pulse-graphic">
+                <div class="sys-node">Dyau.ai Compliance Gateway</div>
+                <div class="pulse-arrow">
+                  <div class="pulse-dot"></div>
+                  <div class="pulse-dot"></div>
+                  <div class="pulse-dot"></div>
+                  <span>➔</span>
+                </div>
+                <div class="sys-node" style="border-color: var(--color-accent); background: rgba(40, 197, 216, 0.1);">
+                  LHDN MyInvois API Gateway
+                </div>
+              </div>
+
+              <h4 style="font-size: 1.25rem; color: var(--color-heading); margin-bottom: 8px;">
+                Document Transmitted for Official Clearance
+              </h4>
+              <p style="font-size: 0.9rem; color: var(--color-body); max-width: 580px; margin: 0 auto 24px auto;">
+                The digital invoice payload has been signed and delivered to LHDN. The government clearance engine verifies tax registration and assigns the legal status.
+              </p>
+
+              <div style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; padding: 8px 18px; border-radius: var(--radius-full); border: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-heading);">
+                <span>📡 Protocol: HTTPS REST / Signed Payload</span>
+                <span style="color: var(--color-border);">|</span>
+                <span style="color: #059669; font-weight: 700;">Status: Awaiting Clearance Response</span>
+              </div>
+            </div>
+
+            <div class="step-action-bar">
+              <div class="step-info-hint">
+                <span>💡</span>
+                <span>Click below to query and inspect the official regulatory clearance result.</span>
+              </div>
+              <button id="btn-step-4" class="btn btn-proceed">Get Validation Result →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 5: Validation Result (User Choice) -->
+        <div id="step-panel-5" class="step-stage-panel" style="display: none;">
+          <div class="step-stage-header">
+            <div class="step-stage-title-wrap">
+              <h3>Stage 5: Validation Result & Outcome Exploration</h3>
+              <p>Select any outcome button to test how the platform handles various real-world scenarios</p>
+            </div>
+            <span class="val-official-pill" style="background: rgba(255,255,255,0.2);">Interactive Outcome Mode</span>
+          </div>
+
+          <div class="step-stage-body">
+            
+            <div class="outcome-selector-area">
+              <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--color-heading); margin-bottom: 10px;">
+                Choose an outcome scenario:
+              </label>
+              <div class="outcome-buttons-grid">
+                <div class="outcome-choice-btn choice-success active" data-outcome="success">
+                  <span class="outcome-status-title" style="color: var(--status-success);">🟢 Success (Valid)</span>
+                  <span class="outcome-choice-desc">Cleared by LHDN • Official UUID & QR issued</span>
+                </div>
+                <div class="outcome-choice-btn choice-hold" data-outcome="hold">
+                  <span class="outcome-status-title" style="color: var(--status-hold);">🟡 On Hold</span>
+                  <span class="outcome-choice-desc">Buyer TIN pending sync • Queued for re-try</span>
+                </div>
+                <div class="outcome-choice-btn choice-rejected" data-outcome="rejected">
+                  <span class="outcome-status-title" style="color: var(--status-rejected);">🔴 Rejected</span>
+                  <span class="outcome-choice-desc">Tax exemption mismatch • 1-click fix</span>
+                </div>
+                <div class="outcome-choice-btn choice-cancelled" data-outcome="cancelled">
+                  <span class="outcome-status-title" style="color: var(--status-cancelled);">⚪ Cancelled</span>
+                  <span class="outcome-choice-desc">Withdrawn by issuer within 72h window</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Outcome Banner -->
+            <div id="outcome-detail-banner" class="outcome-detail-banner res-success">
+              <div class="outcome-banner-header">
+                <h4 id="outcome-banner-title" class="outcome-banner-title">
+                  LHDN MyInvois Clearance: VALID (Code: 200 OK)
+                </h4>
+                <span class="badge-live" style="background: rgba(5, 150, 105, 0.2); color: #065F46;">Legal Clearance Confirmed</span>
+              </div>
+              <p id="outcome-banner-text" class="outcome-banner-text">
+                The document passed all 4 layers of validation (schema integrity, arithmetic consistency, tax rate conformity, and registry lookup). Official UUID and QR link generated.
+              </p>
+            </div>
+
+            <!-- Final Outputs (Rendered on SUCCESS) -->
+            <div id="final-output-area" class="final-output-area">
+
+              <!-- Validated Card -->
+              <div id="validated-invoice-card" class="validated-invoice-card">
+                <div class="val-card-top-bar">
+                  <div class="val-header-info">
+                    <h4 id="val-card-title">Validated e-Invoice: INV-2026-00128</h4>
+                    <span>Government Clearance Certified • Ready for Commercial Settlement</span>
+                  </div>
+                  <div class="val-badge-group">
+                    <span id="val-doc-type-pill" class="val-official-pill">LHDN Validated (01)</span>
+                  </div>
+                </div>
+
+                <div class="val-meta-box">
+                  <div class="val-meta-field">
+                    <span class="lbl">Government Assigned UUID</span>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                      <span id="val-uuid-display" class="val">7F4B92E1-4921-48C9-A780-B149E0832DE8</span>
+                      <button id="btn-copy-uuid" class="btn" style="padding: 2px 8px; font-size: 0.72rem; background: #FFFFFF; border: 1px solid var(--color-border); color: var(--color-heading);" title="Copy UUID">Copy</button>
+                    </div>
+                  </div>
+                  <div class="val-meta-field">
+                    <span class="lbl">Official Validation Timestamp</span>
+                    <span class="val">10 October 2026, 12:49:58 MYT</span>
+                  </div>
+                  <div class="val-meta-field">
+                    <span class="lbl">Document Reference Number</span>
+                    <span id="val-doc-no" class="val">INV-2026-00128</span>
+                  </div>
+                  <div class="val-meta-field">
+                    <span class="lbl">Total Cleared Amount</span>
+                    <span id="val-grand-total" class="val" style="color: var(--color-primary);">MYR 9,720.00</span>
+                  </div>
+                </div>
+
+                <div class="val-table-wrap">
+                  <table class="val-table">
+                    <thead>
+                      <tr>
+                        <th>Line Item Description</th>
+                        <th class="text-right">Qty</th>
+                        <th class="text-right">Unit Price</th>
+                        <th class="text-right">Tax (SST)</th>
+                        <th class="text-right">Line Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="val-table-body"></tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="4" class="text-right" style="padding-top: 14px; font-weight: 600;">Net Subtotal:</td>
+                        <td class="text-right" id="val-subtotal" style="padding-top: 14px; font-weight: 600;">MYR 9,000.00</td>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="text-right" style="font-weight: 600;">Service Tax (SST 8%):</td>
+                        <td class="text-right" id="val-tax" style="font-weight: 600;">MYR 720.00</td>
+                      </tr>
+                      <tr style="font-size: 1.05rem; font-weight: 800;">
+                        <td colspan="4" class="text-right" style="color: var(--color-heading); border-top: 2px solid var(--color-primary);">Grand Total:</td>
+                        <td class="text-right" id="val-final-total" style="color: var(--color-accent); border-top: 2px solid var(--color-primary);">MYR 9,720.00</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <!-- Dummy QR Code -->
+                <div id="qr-preview-box" class="qr-preview-box" title="Click to view simulated verification">
+                  <div class="qr-box-inner">
+                    <svg viewBox="0 0 100 100" fill="#00204C">
+                      <rect x="5" y="5" width="26" height="26" rx="4" fill="#00204C"/>
+                      <rect x="9" y="9" width="18" height="18" rx="2" fill="#FFFFFF"/>
+                      <rect x="13" y="13" width="10" height="10" rx="1" fill="#00204C"/>
+
+                      <rect x="69" y="5" width="26" height="26" rx="4" fill="#00204C"/>
+                      <rect x="73" y="9" width="18" height="18" rx="2" fill="#FFFFFF"/>
+                      <rect x="77" y="13" width="10" height="10" rx="1" fill="#00204C"/>
+
+                      <rect x="5" y="69" width="26" height="26" rx="4" fill="#00204C"/>
+                      <rect x="9" y="73" width="18" height="18" rx="2" fill="#FFFFFF"/>
+                      <rect x="13" y="77" width="10" height="10" rx="1" fill="#00204C"/>
+
+                      <rect x="36" y="8" width="8" height="8" fill="#28C5D8"/>
+                      <rect x="48" y="14" width="8" height="8" fill="#00204C"/>
+                      <rect x="36" y="24" width="6" height="6" fill="#00204C"/>
+                      <rect x="46" y="28" width="10" height="6" fill="#28C5D8"/>
+
+                      <rect x="8" y="38" width="6" height="8" fill="#00204C"/>
+                      <rect x="18" y="42" width="8" height="6" fill="#28C5D8"/>
+                      <rect x="28" y="36" width="6" height="12" fill="#00204C"/>
+                      <rect x="38" y="40" width="8" height="8" fill="#00204C"/>
+                      <rect x="50" y="44" width="12" height="6" fill="#28C5D8"/>
+                      <rect x="66" y="38" width="8" height="8" fill="#00204C"/>
+                      <rect x="78" y="42" width="14" height="6" fill="#00204C"/>
+
+                      <rect x="36" y="56" width="10" height="8" fill="#28C5D8"/>
+                      <rect x="52" y="54" width="8" height="10" fill="#00204C"/>
+                      <rect x="66" y="58" width="10" height="6" fill="#00204C"/>
+                      <rect x="82" y="54" width="10" height="10" fill="#28C5D8"/>
+
+                      <rect x="38" y="72" width="8" height="8" fill="#00204C"/>
+                      <rect x="50" y="76" width="12" height="6" fill="#28C5D8"/>
+                      <rect x="68" y="72" width="6" height="12" fill="#00204C"/>
+                      <rect x="78" y="76" width="14" height="8" fill="#00204C"/>
+                      <rect x="42" y="86" width="8" height="6" fill="#00204C"/>
+                      <rect x="56" y="86" width="10" height="6" fill="#28C5D8"/>
+                      <rect x="72" y="88" width="8" height="6" fill="#00204C"/>
+                    </svg>
+                  </div>
+                  <div class="qr-desc">
+                    <h5>Sample QR Code – Scan to Verify</h5>
+                    <p>When printed or embedded into customer PDF invoices, this QR code verifies authenticity on the official government tax portal.</p>
+                    <span class="qr-link-badge">Official URL: https://myinvois.hasil.gov.my/verify/...</span>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.75rem; color: var(--color-muted); text-align: center; font-style: italic;">
+                  Demonstration sample only. All identifiers, company details, and QR codes are synthetic test data.
+                </div>
+              </div>
+
+              <!-- Dual Downstream Outputs -->
+              <div style="margin-top: 36px;">
+                <span class="section-tag">Downstream System Delivery</span>
+                <h4 style="font-size: 1.35rem; color: var(--color-heading); margin-bottom: 8px;">
+                  Simulated Return to Your Source Systems
+                </h4>
+                <p style="font-size: 0.9rem; color: var(--color-body); margin-bottom: 20px;">
+                  Once clearance is complete, Dyau.ai automatically returns the official status and UUID to your business applications through either REST API or Batch File formats.
+                </p>
+
+                <div class="outputs-dual-grid">
+                  <div class="output-panel">
+                    <div class="output-panel-header">
+                      <h5>
+                        <span>⚡</span>
+                        <span>Simulated REST API Response</span>
+                      </h5>
+                      <span class="panel-chip">HTTP 200 OK • JSON</span>
+                    </div>
+                    <div id="rest-api-response-display" class="output-code-container"></div>
+                  </div>
+
+                  <div class="output-panel">
+                    <div class="output-panel-header">
+                      <h5>
+                        <span>📁</span>
+                        <span>Simulated Batch File Output</span>
+                      </h5>
+                      <span class="panel-chip">CSV / Delimited File</span>
+                    </div>
+                    <div id="batch-output-display" class="output-code-container" style="color: #67E8F9;"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="step-action-bar">
+              <div class="step-info-hint">
+                <span>💡</span>
+                <span>Navigate between tabs above to explore Master Data, Reporting, and Administration.</span>
+              </div>
+              <button class="btn btn-secondary" style="background: var(--color-primary); color: #fff;" onclick="location.reload();">
+                ↺ Start Fresh Walkthrough
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===================================================================
+         TAB 2: MASTER DATA – CUSTOMER / PARTY MANAGEMENT
+         =================================================================== -->
+    <div id="tab-master-data" class="tab-content-panel">
+      
+      <div class="master-header-card">
+        <div>
+          <span class="section-tag" style="margin-bottom: 4px;">Master Data Administration</span>
+          <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--color-heading); margin-bottom: 4px;">
+            Party Master: Customers & Suppliers
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--color-body);">
+            Maintain verified Tax Identification Numbers (TIN), Business Registration Numbers (BRN), and addresses mandatory for Malaysian e-Invoicing clearance.
+          </p>
+        </div>
+
+        <div class="master-controls-row">
+          <div class="search-input-wrap">
+            <span class="search-icon-pos">🔍</span>
+            <input type="text" id="party-search-input" class="search-input" placeholder="Search by name, TIN, or BRN...">
+          </div>
+
+          <div class="filter-btn-group">
+            <button class="filter-chip-btn party-filter-chip active" data-filter="all">All Parties</button>
+            <button class="filter-chip-btn party-filter-chip" data-filter="Customer">Customers</button>
+            <button class="filter-chip-btn party-filter-chip" data-filter="Supplier">Suppliers</button>
+          </div>
+
+          <button id="btn-add-party" class="btn btn-primary" style="font-size: 0.85rem; padding: 8px 16px;">
+            + New Party Record
+          </button>
+        </div>
+      </div>
+
+      <!-- Master Data Table -->
+      <div class="data-table-container">
+        <table class="master-table">
+          <thead>
+            <tr>
+              <th>Entity Name / Identifier</th>
+              <th>Party Role</th>
+              <th>Tax ID (TIN)</th>
+              <th>Registration No (BRN)</th>
+              <th>SST Registration</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="party-table-body">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ===================================================================
+         TAB 3: REPORTING DASHBOARD
+         =================================================================== -->
+    <div id="tab-reporting" class="tab-content-panel">
+      
+      <!-- Report Filter Card (Mandatory Filters) -->
+      <div class="report-filters-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <span class="section-tag" style="margin: 0;">Compliance Analytics & Reconciliation</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--color-heading);">
+              e-Invoicing Operations & Tax Audit Report
+            </h3>
+          </div>
+          <span style="font-size: 0.8rem; color: var(--color-muted);">Live Filterable Demo Data</span>
+        </div>
+
+        <div class="report-filter-grid">
+          <!-- Filter 1: Date Range From -->
+          <div class="filter-field-box">
+            <label for="filter-date-from">From Date</label>
+            <input type="date" id="filter-date-from" class="filter-date-input" value="2026-08-01">
+          </div>
+
+          <!-- Filter 2: Date Range To -->
+          <div class="filter-field-box">
+            <label for="filter-date-to">To Date</label>
+            <input type="date" id="filter-date-to" class="filter-date-input" value="2026-10-10">
+          </div>
+
+          <!-- Filter 3: Month Selector -->
+          <div class="filter-field-box">
+            <label for="filter-month-select">Month Selector</label>
+            <select id="filter-month-select" class="filter-select">
+              <option value="all">All Months (Q3-Q4 2026)</option>
+              <option value="October 2026">October 2026</option>
+              <option value="September 2026">September 2026</option>
+              <option value="August 2026">August 2026</option>
+            </select>
+          </div>
+
+          <!-- Filter 4: Customer / Party Filter -->
+          <div class="filter-field-box">
+            <label for="filter-customer-select">Customer / Party Filter</label>
+            <select id="filter-customer-select" class="filter-select">
+              <option value="all">All Parties & Counterparties</option>
+              <!-- Populated dynamically via JS -->
+            </select>
+          </div>
+
+          <!-- Filter Actions -->
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-apply-filters" class="btn btn-primary" style="padding: 9px 16px; font-size: 0.85rem;">Apply</button>
+            <button id="btn-reset-filters" class="btn btn-outline" style="padding: 9px 14px; font-size: 0.85rem;">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 KPI Metric Cards -->
+      <div class="kpi-metrics-grid">
+        <div class="kpi-card">
+          <span class="kpi-card-header">Total Submitted</span>
+          <div class="kpi-card-val" id="kpi-total-val">11</div>
+          <span class="kpi-card-sub">Filtered Transactions</span>
+        </div>
+
+        <div class="kpi-card" style="border-top: 3px solid var(--status-success);">
+          <span class="kpi-card-header" style="color: var(--status-success);">Valid (Success)</span>
+          <div class="kpi-card-val" id="kpi-valid-val" style="color: var(--status-success);">8</div>
+          <span class="kpi-card-sub">Cleared with UUID</span>
+        </div>
+
+        <div class="kpi-card" style="border-top: 3px solid var(--status-hold);">
+          <span class="kpi-card-header" style="color: var(--status-hold);">On Hold</span>
+          <div class="kpi-card-val" id="kpi-hold-val" style="color: var(--status-hold);">1</div>
+          <span class="kpi-card-sub">Sync Verification</span>
+        </div>
+
+        <div class="kpi-card" style="border-top: 3px solid var(--status-rejected);">
+          <span class="kpi-card-header" style="color: var(--status-rejected);">Rejected</span>
+          <div class="kpi-card-val" id="kpi-rejected-val" style="color: var(--status-rejected);">1</div>
+          <span class="kpi-card-sub">Exception Logged</span>
+        </div>
+
+        <div class="kpi-card" style="border-top: 3px solid var(--status-cancelled);">
+          <span class="kpi-card-header" style="color: var(--status-cancelled);">Withdrawn / Cancel</span>
+          <div class="kpi-card-val" id="kpi-cancelled-val" style="color: var(--status-cancelled);">1</div>
+          <span class="kpi-card-sub">72h Window Right</span>
+        </div>
+
+        <div class="kpi-card" style="border-top: 3px solid var(--purple-600);">
+          <span class="kpi-card-header" style="color: var(--purple-700);">Self-Billed / Normal</span>
+          <div class="kpi-card-val" id="kpi-selfbilled-val" style="font-size: 1.4rem; color: var(--purple-700);">2 / 9</div>
+          <span class="kpi-card-sub">Transaction Mix</span>
+        </div>
+      </div>
+
+      <!-- Visual Status Breakdown Bar -->
+      <div class="visual-breakdown-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h4 style="font-size: 1rem; font-weight: 800; color: var(--color-heading);">
+            Clearance Distribution Overview
+          </h4>
+          <span style="font-size: 0.8rem; color: var(--color-muted);">Tax Authority Response Ratio</span>
+        </div>
+
+        <div class="breakdown-bar-wrap">
+          <div id="bar-seg-valid" class="bar-segment bar-seg-valid" style="width: 73%;" title="Valid"></div>
+          <div id="bar-seg-hold" class="bar-segment bar-seg-hold" style="width: 9%;" title="On Hold"></div>
+          <div id="bar-seg-rejected" class="bar-segment bar-seg-rejected" style="width: 9%;" title="Rejected"></div>
+          <div id="bar-seg-cancelled" class="bar-segment bar-seg-cancelled" style="width: 9%;" title="Cancelled"></div>
+        </div>
+
+        <div class="breakdown-legend-row">
+          <div class="legend-dot-item">
+            <span class="legend-dot" style="background: var(--status-success);"></span>
+            <span>Valid (Success)</span>
+          </div>
+          <div class="legend-dot-item">
+            <span class="legend-dot" style="background: var(--status-hold);"></span>
+            <span>On Hold</span>
+          </div>
+          <div class="legend-dot-item">
+            <span class="legend-dot" style="background: var(--status-rejected);"></span>
+            <span>Rejected</span>
+          </div>
+          <div class="legend-dot-item">
+            <span class="legend-dot" style="background: var(--status-cancelled);"></span>
+            <span>Cancelled / Withdrawn</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sample Report Table -->
+      <div class="data-table-container">
+        <table class="master-table">
+          <thead>
+            <tr>
+              <th>Document No</th>
+              <th>Type</th>
+              <th>Customer / Counterparty</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Official UUID</th>
+              <th style="text-align: right;">Amount (MYR)</th>
+            </tr>
+          </thead>
+          <tbody id="report-table-body">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ===================================================================
+         TAB 4: ADMINISTRATION (SIMPLIFIED)
+         =================================================================== -->
+    <div id="tab-administration" class="tab-content-panel">
+      
+      <div class="admin-grid">
+        
+        <!-- Left: Configuration Options -->
+        <div class="admin-card">
+          <h4>Platform Configuration & Governance</h4>
+          <p class="subtitle">Simplified tenant-level controls governing LHDN clearance logic.</p>
+
+          <div class="config-toggle-row">
+            <div class="config-info">
+              <h5>Automatic LHDN Clearance Submission</h5>
+              <span>Instantly transmit validated documents upon intake without manual queue hold</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" class="config-switch-input" data-config="Automatic LHDN Submission" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="config-toggle-row">
+            <div class="config-info">
+              <h5>Real-Time Discrepancy & Holding Alerts</h5>
+              <span>Trigger instant webhook notification when a buyer TIN requires verification</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" class="config-switch-input" data-config="Real-Time Discrepancy Alerts" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="config-toggle-row">
+            <div class="config-info">
+              <h5>Enforce Strict 72-Hour Cancellation Window</h5>
+              <span>Block cancellation attempts after regulatory statutory window expires</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" class="config-switch-input" data-config="72h Window Enforcement" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="config-toggle-row">
+            <div class="config-info">
+              <h5>Consolidated B2C Monthly Aggregation</h5>
+              <span>Group end-of-month point-of-sale consumer receipts into a single tax summary</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" class="config-switch-input" data-config="B2C Monthly Aggregation">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Right: Role Indicators -->
+        <div class="admin-card">
+          <h4>Role-Based Access Governance (RBAC)</h4>
+          <p class="subtitle">Separation of duties aligned with enterprise compliance policies.</p>
+
+          <div class="roles-grid">
+            <div class="role-box" style="border-left: 3px solid var(--color-accent);">
+              <h5><span>👑</span> Tax Approver</h5>
+              <p>Authority to approve exceptions, initiate formal cancellations, and certify returns.</p>
+            </div>
+
+            <div class="role-box" style="border-left: 3px solid var(--color-primary);">
+              <h5><span>📝</span> AP / AR Clerk</h5>
+              <p>Upload transaction batches, monitor intake queue, and review invoice drafts.</p>
+            </div>
+
+            <div class="role-box" style="border-left: 3px solid var(--status-success);">
+              <h5><span>🔍</span> Compliance Auditor</h5>
+              <p>Read-only access to tamper-proof clearance logs, reconciliation reports, and UUIDs.</p>
+            </div>
+
+            <div class="role-box" style="border-left: 3px solid var(--color-secondary);">
+              <h5><span>🛡️</span> System Admin</h5>
+              <p>Manage party master records, integration endpoints, and API security certificates.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Card: Audit Trail & Activity Log -->
+      <div class="admin-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div>
+            <h4>Audit Trail & Compliance Activity Stream</h4>
+            <p class="subtitle" style="margin-bottom: 0;">Immutable chronological record of regulatory actions.</p>
+          </div>
+          <span class="badge-live">Active Audit Daemon</span>
+        </div>
+
+        <div class="audit-list">
+          <div class="audit-item">
+            <span class="audit-time">10 Oct 2026, 12:49:58 MYT</span>
+            <div class="audit-desc">
+              <strong>UUID Cleared:</strong> Document <code>INV-2026-00128</code> cleared by LHDN MyInvois. UUID assigned: <code>7F4B92E1-4921-48C9-A780-B149E0832DE8</code>.
+            </div>
+          </div>
+
+          <div class="audit-item">
+            <span class="audit-time">10 Oct 2026, 12:49:32 MYT</span>
+            <div class="audit-desc">
+              <strong>REST Ingestion:</strong> Ingested payload for <code>Example Trading Sdn Bhd</code> (Amount: MYR 9,720.00). User: <code>system.api_integration</code>.
+            </div>
+          </div>
+
+          <div class="audit-item">
+            <span class="audit-time">10 Oct 2026, 11:30:20 MYT</span>
+            <div class="audit-desc">
+              <strong>Self-Billed Submission:</strong> Document <code>SB-2026-00062</code> issued on behalf of <code>Ahmad Synergy Logistics Ent</code>. Cleared.
+            </div>
+          </div>
+
+          <div class="audit-item">
+            <span class="audit-time">10 Oct 2026, 10:15:00 MYT</span>
+            <div class="audit-desc">
+              <strong>Master Data Updated:</strong> Verified TIN registry update for party <code>Malaya Retail Holdings Bhd</code>. User: <code>admin@dyau.ai</code>.
+            </div>
+          </div>
+
+          <div class="audit-item">
+            <span class="audit-time">09 Oct 2026, 16:45:10 MYT</span>
+            <div class="audit-desc">
+              <strong>Cancellation Audit:</strong> Regulatory cancellation receipt registered for <code>INV-2026-00124</code> within 72-hour window.
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
 
   </main>
+
+  <!-- Modal: Add / Edit Party Master Record -->
+  <div id="party-modal-overlay" class="modal-overlay">
+    <div class="modal-card">
+      <button id="btn-close-party-modal" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <h4 id="party-modal-title" style="font-size: 1.3rem; font-weight: 800; color: var(--color-heading); margin-bottom: 6px;">
+        Register New Party
+      </h4>
+      <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 20px;">
+        Enter verified Malaysian tax registry identifiers for e-Invoicing compliance.
+      </p>
+
+      <form id="party-form">
+        <input type="hidden" id="party-id-hidden">
+
+        <div class="form-group">
+          <label for="party-name-input">Entity Registered Legal Name</label>
+          <input type="text" id="party-name-input" class="form-input" placeholder="e.g. Apex Global Logistics Sdn Bhd" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label for="party-type-input">Party Role</label>
+            <select id="party-type-input" class="form-input">
+              <option value="Customer">Customer (Buyer)</option>
+              <option value="Supplier">Supplier (Vendor)</option>
+              <option value="Both">Both (Dual Counterparty)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="party-tin-input">Tax ID (TIN)</label>
+            <input type="text" id="party-tin-input" class="form-input" placeholder="e.g. C20987112020" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label for="party-brn-input">Business Reg No (BRN)</label>
+            <input type="text" id="party-brn-input" class="form-input" placeholder="e.g. 202101034455" required>
+          </div>
+
+          <div class="form-group">
+            <label for="party-sst-input">SST Registration ID</label>
+            <input type="text" id="party-sst-input" class="form-input" placeholder="e.g. W10-2104-32000077">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label for="party-email-input">Finance Email</label>
+            <input type="email" id="party-email-input" class="form-input" placeholder="tax@company.my" required>
+          </div>
+
+          <div class="form-group">
+            <label for="party-phone-input">Contact Phone</label>
+            <input type="text" id="party-phone-input" class="form-input" placeholder="+60 3-1234 5678">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="party-address-input">Registered Street Address</label>
+          <input type="text" id="party-address-input" class="form-input" placeholder="Suite, Street, City, Postcode, State" required>
+        </div>
+
+        <button type="submit" class="btn btn-proceed" style="width: 100%; margin-top: 10px;">
+          Save Master Record
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="demo-toast" class="demo-toast"></div>
 
   <!-- Footer -->
   <footer class="site-footer">
@@ -615,7 +1026,7 @@
         <div class="footer-brand">
           <div class="brand-wrapper">
             <div class="brand-logo-mark" aria-hidden="true">
-              <img src="images/dyau-logo.png" alt="Dyau.ai" class="brand-logo-img">
+              <img src="dyaulogo.png" alt="Dyau.ai" class="brand-logo-img">
             </div>
             <div class="brand-text">
               <span class="brand-title">Dyau.ai</span>
@@ -648,7 +1059,7 @@
             <a href="https://dyau.ai" target="_blank" rel="noopener">dyau.ai</a>
           </div>
           <div class="footer-contact-item" style="margin-top: 14px;">
-            <span style="font-size: 0.8rem; color: #94A3B8;">Hubs: Singapore (HQ) • Malaysia • India</span>
+            <span style="font-size: 0.8rem; color: #8B96A9;">Hubs: Singapore (HQ) • Malaysia • India</span>
           </div>
         </div>
       </div>
