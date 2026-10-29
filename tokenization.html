@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vaultless Data Tokenization | Dyau.ai Interactive Demo</title>
+  <meta name="description" content="Try Dyau.ai's format-preserving data tokenization live in your browser: edge interception, role-based detokenization with audit, search and joins on tokens, and key rotation.">
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="dyaulogo.png">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-wrapper">
+        <div class="brand-logo-mark" aria-hidden="true">
+          <img src="dyaulogo.png" alt="Dyau.ai" class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Dyau.ai</span>
+          <span class="brand-tagline">Wisdom Beyond Intelligence</span>
+        </div>
+      </a>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation menu">☰</button>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="index.html#demo-hub" class="nav-link">Demo Hub</a></li>
+        <li><a href="e-invoicing.html" class="nav-link">e-Invoicing Platform</a></li>
+        <li><a href="tokenization.html" class="nav-link active">Data Tokenization</a></li>
+        <li><a href="mailto:contact@dyau.ai?subject=Data%20Tokenization%20Enquiry" class="nav-cta">Contact Enterprise Team</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Engine status ribbon -->
+  <section class="logic-inspector-bar" aria-label="Tokenization engine status">
+    <div class="container logic-inspector-container">
+      <div class="logic-inspector-title">
+        <span class="pulse-indicator"></span>
+        <span>Engine running in your browser:</span>
+      </div>
+      <div class="tk-ribbon-pills">
+        <span class="logic-pill" id="ribbon-selftest">NIST FF1 self-test: running…</span>
+        <span class="logic-pill">AES-256 · FF1 (NIST SP 800-38G)</span>
+        <span class="logic-pill">Minimum domain 10⁶ enforced</span>
+        <span class="logic-pill" id="ribbon-key">Session key: —</span>
+        <span class="logic-pill">0 network calls</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workspace header + tabs -->
+  <div class="workspace-top-bar">
+    <div class="container workspace-bar-inner">
+      <div class="workspace-identity">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--color-heading);">Vaultless Data Tokenization</h2>
+        <span class="workspace-badge-pill">Format-Preserving · Live Demo</span>
+      </div>
+
+      <div class="ws-user-status">
+        <div class="tk-region-switch" role="group" aria-label="Sample data region">
+          <span class="tk-region-label">Sample data:</span>
+          <div class="sim-toggle-btn-group">
+            <button class="sim-toggle-btn active" data-region="my">🇲🇾 Malaysia</button>
+            <button class="sim-toggle-btn" data-region="us">🇺🇸 United States</button>
+          </div>
+        </div>
+        <button id="btn-reset-tk" class="btn btn-reset">↺ Reset Demo</button>
+      </div>
+
+      <nav class="workspace-tabs-nav" aria-label="Demo sections">
+        <button class="ws-tab-btn active" data-tab="tab-edge"><span>🛡️</span><span>1. Edge Interception</span></button>
+        <button class="ws-tab-btn" data-tab="tab-access"><span>👥</span><span>2. Access &amp; Audit</span></button>
+        <button class="ws-tab-btn" data-tab="tab-search"><span>🔎</span><span>3. Search &amp; Join on Tokens</span></button>
+        <button class="ws-tab-btn" data-tab="tab-formats"><span>🔑</span><span>4. Formats &amp; Key Rotation</span></button>
+      </nav>
+    </div>
+  </div>
+
+  <main class="container" style="padding-bottom: 80px;">
+
+    <!-- Privacy notice -->
+    <div class="tk-notice">
+      <div class="tk-notice-icon" aria-hidden="true">🔒</div>
+      <div>
+        <strong>Everything on this page runs inside your browser.</strong>
+        A fresh AES-256 key is generated in this tab when the page loads, held only in memory, and discarded when you close or reset it. Nothing you type is stored or sent anywhere. All identifiers in the samples are synthetic test data.
+      </div>
+    </div>
+
+    <!-- =================================================================
+         TAB 1: EDGE INTERCEPTION
+         ================================================================= -->
+    <div id="tab-edge" class="tab-content-panel active">
+
+      <div class="tk-intro">
+        <span class="section-tag">Step 1 · Zero-trust edge</span>
+        <h3>Sensitive fields are tokenized at the gateway, before any app, log or database sees them</h3>
+        <p>Edit the incoming request below (or keep the sample), then send it through the gateway. Downstream systems receive tokens that keep the original format, so validations, indexes and joins keep working.</p>
+      </div>
+
+      <div class="tk-grid-2">
+        <!-- Request editor -->
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Incoming API request</h4>
+            <span class="tk-chip">POST /v1/payments · application/json</span>
+          </div>
+          <textarea id="edge-input" class="tk-textarea" spellcheck="false" aria-label="Incoming request JSON"></textarea>
+          <div class="tk-row tk-row-between">
+            <button id="btn-edge-sample" class="btn btn-outline tk-btn-sm">↺ Restore sample</button>
+            <label class="tk-check">
+              <input type="checkbox" id="edge-outage">
+              <span>Simulate token service outage</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Gateway rules + pipeline -->
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Gateway field policy</h4>
+            <span class="tk-chip">Applied per route</span>
+          </div>
+          <div id="edge-rules" class="tk-rules"></div>
+
+          <div class="tk-pipeline" id="edge-pipeline" aria-label="Request pipeline">
+            <div class="tk-node" data-node="client"><span class="tk-node-ico">📱</span><span>Client</span></div>
+            <div class="tk-arrow">➔</div>
+            <div class="tk-node" data-node="edge"><span class="tk-node-ico">🛡️</span><span>Edge gateway</span></div>
+            <div class="tk-arrow">➔</div>
+            <div class="tk-node" data-node="engine"><span class="tk-node-ico">🔑</span><span>Token engine</span></div>
+            <div class="tk-arrow">➔</div>
+            <div class="tk-node" data-node="lake"><span class="tk-node-ico">🗄️</span><span>Streams &amp; lakehouse</span></div>
+          </div>
+
+          <button id="btn-edge-send" class="btn btn-proceed" style="width: 100%;">Send through gateway →</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div id="edge-result" class="tk-result" hidden>
+        <div id="edge-banner" class="outcome-detail-banner res-success">
+          <div class="outcome-banner-header">
+            <h4 id="edge-banner-title" class="outcome-banner-title"></h4>
+            <span id="edge-banner-chip" class="tk-chip"></span>
+          </div>
+          <p id="edge-banner-text" class="outcome-banner-text"></p>
+        </div>
+
+        <div class="tk-grid-2" id="edge-output-grid">
+          <div class="tk-card">
+            <div class="tk-card-head">
+              <h4>What downstream systems receive</h4>
+              <span class="tk-chip tk-chip-ok">Tokens only</span>
+            </div>
+            <pre id="edge-output" class="payload-json-box tk-pre"></pre>
+          </div>
+          <div class="tk-card">
+            <div class="tk-card-head">
+              <h4>Field-by-field</h4>
+              <span class="tk-chip" id="edge-timing"></span>
+            </div>
+            <div class="tk-table-wrap">
+              <table class="master-table tk-table">
+                <thead><tr><th>Field</th><th>Action</th><th>Forwarded value</th></tr></thead>
+                <tbody id="edge-fields"></tbody>
+              </table>
+            </div>
+            <div class="tk-subhead">Gateway access log (sanitized)</div>
+            <pre id="edge-log" class="output-code-container tk-pre tk-pre-sm"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick tokenizer -->
+      <div class="tk-card" style="margin-top: 24px;">
+        <div class="tk-card-head">
+          <h4>Try your own value</h4>
+          <span class="tk-chip">Tokenize · Detokenize · Repeat</span>
+        </div>
+        <div class="tk-quick-grid">
+          <div class="filter-field-box">
+            <label for="quick-field">Field type</label>
+            <select id="quick-field" class="filter-select"></select>
+          </div>
+          <div class="filter-field-box tk-quick-input">
+            <label for="quick-value">Value</label>
+            <input id="quick-value" class="form-input tk-mono" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="tk-row" style="align-items: flex-end;">
+            <button id="btn-quick-tok" class="btn btn-primary">Tokenize</button>
+          </div>
+        </div>
+        <div id="quick-out" class="tk-quick-out" hidden></div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         TAB 2: ACCESS & AUDIT
+         ================================================================= -->
+    <div id="tab-access" class="tab-content-panel">
+
+      <div class="tk-intro">
+        <span class="section-tag">Step 2 · Policy-driven detokenization</span>
+        <h3>One stored token, a different answer for each role, and an audit record for every decision</h3>
+        <p>The lakehouse only holds tokens. Pick who is asking and why: the policy decides whether each column comes back in clear, masked, as the raw token, or not at all.</p>
+      </div>
+
+      <div class="tk-grid-side">
+        <div class="tk-card">
+          <div class="tk-card-head"><h4>Who is querying?</h4></div>
+          <div id="role-list" class="tk-role-list"></div>
+          <div class="filter-field-box" style="margin-top: 14px;">
+            <label for="access-reason">Access reason (required for clear-text)</label>
+            <input id="access-reason" class="form-input" value="Fraud case FC-4711" autocomplete="off">
+          </div>
+          <button id="btn-run-query" class="btn btn-proceed" style="width: 100%; margin-top: 14px;">Run query on customers table →</button>
+          <div class="tk-subhead">Column policy</div>
+          <div class="tk-table-wrap">
+            <table class="master-table tk-table tk-policy" id="policy-table"></table>
+          </div>
+        </div>
+
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4 id="access-title">Query result</h4>
+            <span class="tk-chip" id="access-chip">Run a query to see results</span>
+          </div>
+          <div class="tk-table-wrap">
+            <table class="master-table tk-table" id="access-table"></table>
+          </div>
+          <div class="tk-legend">
+            <span><i class="tk-dot tk-dot-clear"></i>Clear-text (authorized)</span>
+            <span><i class="tk-dot tk-dot-mask"></i>Masked</span>
+            <span><i class="tk-dot tk-dot-token"></i>Token (no detokenization)</span>
+            <span><i class="tk-dot tk-dot-deny"></i>Denied</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tk-card" style="margin-top: 24px;">
+        <div class="tk-card-head">
+          <div>
+            <h4>Tamper-evident audit trail</h4>
+            <p class="tk-muted">Each event is hash-chained to the one before it. It records who, which column, why and the decision — never the value or the token.</p>
+          </div>
+          <div class="tk-row">
+            <button id="btn-verify-chain" class="btn btn-outline tk-btn-sm">Verify chain</button>
+            <button id="btn-tamper" class="btn btn-outline tk-btn-sm">Tamper with an event</button>
+          </div>
+        </div>
+        <div id="chain-status" class="tk-chain-status" hidden></div>
+        <div id="audit-list" class="tk-audit-list">
+          <div class="tk-empty">No events yet. Run a query above.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         TAB 3: SEARCH & JOIN ON TOKENS
+         ================================================================= -->
+    <div id="tab-search" class="tab-content-panel">
+
+      <div class="tk-intro">
+        <span class="section-tag">Step 3 · Analytics without exposure</span>
+        <h3>Find a customer and join tables using tokens alone — nothing gets detokenized</h3>
+        <p>Deterministic tokens mean the same value always produces the same token under the same key, so equality search, joins and group-bys run directly on tokenized columns.</p>
+      </div>
+
+      <div class="tk-grid-2">
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Look up a customer by <span class="js-id-label">ID</span></h4>
+            <span class="tk-chip">WHERE id = tokenize(?)</span>
+          </div>
+          <div class="tk-row tk-search-row">
+            <input id="search-input" class="form-input tk-mono" autocomplete="off" spellcheck="false" aria-label="Plaintext identifier to search">
+            <button id="btn-search" class="btn btn-primary">Search</button>
+          </div>
+          <div class="tk-samples"><span class="tk-muted">Try:</span><span id="search-samples"></span></div>
+          <div id="search-out" class="tk-search-out" hidden></div>
+        </div>
+
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Join transactions to customers</h4>
+            <span class="tk-chip">ON customers.id_tok = transactions.id_tok</span>
+          </div>
+          <p class="tk-muted" style="margin-bottom: 14px;">Both tables were tokenized independently at ingest. The join runs on tokens; the plaintext join is computed only to prove the counts match.</p>
+          <button id="btn-join" class="btn btn-proceed" style="width: 100%;">Run tokenized join →</button>
+          <div id="join-out" class="tk-join-out" hidden></div>
+        </div>
+      </div>
+
+      <div class="tk-card" style="margin-top: 24px;">
+        <div class="tk-card-head">
+          <div>
+            <h4>Stored data, exactly as the lakehouse holds it</h4>
+            <p class="tk-muted">This is what someone with storage, backup or log access would see.</p>
+          </div>
+          <div class="filter-btn-group" role="tablist">
+            <button class="filter-chip-btn active" data-store="customers">customers</button>
+            <button class="filter-chip-btn" data-store="transactions">transactions</button>
+          </div>
+        </div>
+        <div class="tk-table-wrap tk-table-scroll">
+          <table class="master-table tk-table" id="store-table"></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         TAB 4: FORMATS & KEY ROTATION
+         ================================================================= -->
+    <div id="tab-formats" class="tab-content-panel">
+
+      <div class="tk-intro">
+        <span class="section-tag">Step 4 · Under the hood</span>
+        <h3>Format rules, the NIST safety floor, card numbers and key rotation</h3>
+        <p>Every field type has its own profile. Fields too short to encrypt safely are refused rather than silently weakened.</p>
+      </div>
+
+      <div class="tk-card">
+        <div class="tk-card-head">
+          <h4>Field profiles</h4>
+          <span class="tk-chip">Live examples under the current key</span>
+        </div>
+        <div class="tk-table-wrap">
+          <table class="master-table tk-table" id="profiles-table"></table>
+        </div>
+      </div>
+
+      <div class="tk-grid-2" style="margin-top: 24px;">
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Minimum domain check</h4>
+            <span class="tk-chip">radix<sup>length</sup> ≥ 1,000,000</span>
+          </div>
+          <p class="tk-muted">Small domains can be brute-forced or reconstructed whatever the key size, so NIST sets a floor of one million possible values.</p>
+          <div class="tk-quick-grid tk-quick-grid-3">
+            <div class="filter-field-box">
+              <label for="dom-radix">Character set</label>
+              <select id="dom-radix" class="filter-select">
+                <option value="10">Digits 0–9 (radix 10)</option>
+                <option value="36">Letters + digits (radix 36)</option>
+              </select>
+            </div>
+            <div class="filter-field-box">
+              <label for="dom-len">Length: <strong id="dom-len-val">4</strong></label>
+              <input id="dom-len" type="range" min="1" max="16" value="4" class="tk-range">
+            </div>
+          </div>
+          <div id="dom-out" class="tk-dom-out"></div>
+        </div>
+
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Card number explorer</h4>
+            <span class="tk-chip">BIN + last 4 preserved</span>
+          </div>
+          <div class="tk-row tk-search-row">
+            <input id="pan-input" class="form-input tk-mono" autocomplete="off" spellcheck="false" aria-label="Card number">
+            <button id="btn-pan" class="btn btn-primary">Tokenize</button>
+          </div>
+          <div class="tk-samples"><span class="tk-muted">Test cards:</span><span id="pan-samples"></span></div>
+          <div id="pan-out" class="tk-pan-out" hidden></div>
+          <div class="tk-subhead">Experiment: do card tokens pass the Luhn check?</div>
+          <div class="tk-row">
+            <button id="btn-luhn-16" class="btn btn-outline tk-btn-sm">1,000 × 16-digit</button>
+            <button id="btn-luhn-19" class="btn btn-outline tk-btn-sm">1,000 × 19-digit</button>
+          </div>
+          <div id="luhn-out" class="tk-muted tk-luhn-out"></div>
+        </div>
+      </div>
+
+      <div class="tk-grid-2" style="margin-top: 24px;">
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Key rotation</h4>
+            <span class="tk-chip" id="kv-chip">Active key: v1</span>
+          </div>
+          <div id="kv-status" class="tk-kv-status"></div>
+          <button id="btn-rotate" class="btn btn-proceed" style="width: 100%; margin-top: 14px;">Rotate key and re-tokenize stored data →</button>
+          <div class="tk-progress" id="rotate-progress" hidden><div class="tk-progress-fill" id="rotate-fill"></div></div>
+          <div id="rotate-out" class="tk-rotate-out" hidden></div>
+        </div>
+
+        <div class="tk-card">
+          <div class="tk-card-head">
+            <h4>Engine self-test &amp; speed</h4>
+            <span class="tk-chip" id="selftest-chip">Running…</span>
+          </div>
+          <p class="tk-muted">On page load the engine runs the nine public FF1 sample vectors from NIST SP 800-38G and must reproduce every one exactly.</p>
+          <div class="tk-table-wrap">
+            <table class="master-table tk-table tk-table-compact" id="selftest-table"></table>
+          </div>
+          <button id="btn-bench" class="btn btn-outline tk-btn-sm" style="margin-top: 12px;">Benchmark: tokenize 5,000 IDs</button>
+          <div id="bench-out" class="tk-muted" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+
+      <p class="tk-footnote">
+        This page uses a browser reference implementation for demonstration. Production deployments run the same standard (FF1, AES-256) in a hardened, access-controlled service with keys held in a key management system, and are designed to support PCI DSS, PDPA, GDPR and HIPAA programmes.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="demo-toast" class="demo-toast"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand-wrapper">
+            <div class="brand-logo-mark" aria-hidden="true">
+              <img src="dyaulogo.png" alt="Dyau.ai" class="brand-logo-img">
+            </div>
+            <div class="brand-text">
+              <span class="brand-title">Dyau.ai</span>
+              <span class="brand-tagline">Wisdom Beyond Intelligence</span>
+            </div>
+          </div>
+          <p>
+            Data tokenization demonstration for prospective enterprise clients. Runs entirely in the browser with synthetic data; no production keys, services or internal code are used.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Platform Navigation</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Company Homepage</a></li>
+            <li><a href="index.html#demo-hub">Interactive Demo Hub</a></li>
+            <li><a href="e-invoicing.html">e-Invoicing Live Demo</a></li>
+            <li><a href="tokenization.html">Data Tokenization Demo</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Direct Contact</h5>
+          <div class="footer-contact-item">
+            <span>✉️</span>
+            <a href="mailto:contact@dyau.ai">contact@dyau.ai</a>
+          </div>
+          <div class="footer-contact-item">
+            <span>🌐</span>
+            <a href="https://dyau.ai" target="_blank" rel="noopener">dyau.ai</a>
+          </div>
+          <div class="footer-contact-item" style="margin-top: 14px;">
+            <span style="font-size: 0.8rem; color: #8B96A9;">Hubs: Singapore (HQ) • Malaysia • India</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Dyau.ai. Demonstration sample for prospective enterprise clients.</div>
+        <div class="footer-tagline-statement">Dyau.ai — Wisdom Beyond Intelligence</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/fpe-engine.js"></script>
+  <script src="js/tokenization.js"></script>
+</body>
+</html>
