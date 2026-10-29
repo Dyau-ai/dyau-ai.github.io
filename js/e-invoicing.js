@@ -1261,11 +1261,14 @@ function initReportingDashboard() {
 
   // Reset filters button
   document.getElementById('btn-reset-filters')?.addEventListener('click', () => {
-    document.getElementById('filter-month-select').value = 'all';
-    document.getElementById('filter-customer-select').value = 'all';
-    document.getElementById('filter-status-select').value = 'all';
-    document.getElementById('filter-date-from').value = '';
-    document.getElementById('filter-date-to').value = '';
+    ['filter-month-select', 'filter-customer-select', 'filter-status-select'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.value = 'all';
+    });
+    ['filter-date-from', 'filter-date-to'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
     renderReportTable();
     showToast('Filters cleared.');
   });
