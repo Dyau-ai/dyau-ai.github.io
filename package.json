@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Dyau-ai/dyau-ai.github.io/issues"
   },
-  "homepage": "https://github.com/Dyau-ai/dyau-ai.github.io#readme"
+  "homepage": "https://github.com/Dyau-ai/dyau-ai.github.io#readme",
+  "dependencies": {
+    "dyau-ai.github.io": "github:Dyau-ai/dyau-ai.github.io"
+  }
 }
