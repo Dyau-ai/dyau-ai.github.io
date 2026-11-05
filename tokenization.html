@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vaultless Data Tokenization | Dyau.ai Interactive Demo</title>
-  <meta name="description" content="Try Dyau.ai's format-preserving data tokenization live in your browser: edge interception, role-based detokenization with audit, search and joins on tokens, and key rotation.">
+  <meta name="description" content="Invite-only demo of Dyau.ai's vaultless data tokenization: a live REST tokenization and detokenization service, a Medallion (RAW, Bronze, Silver, Gold) banking pipeline, and policy-controlled disclosure.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dyau-tok-gateway.dyau-ai.workers.dev; base-uri 'self'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <script src="js/theme.js"></script>
+  <script src="js/config.js"></script>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" type="image/png" href="dyaulogo.png">
 </head>
@@ -36,19 +40,86 @@
     </div>
   </header>
 
+  <!-- =====================================================================
+       SIGN-IN GATE (invite-only)
+       ===================================================================== -->
+  <section id="auth-gate" class="auth-gate" aria-labelledby="auth-title">
+    <div class="container auth-grid">
+      <div class="auth-pitch">
+        <span class="hero-pill"><span aria-hidden="true">🔒</span> Private preview · Invite only</span>
+        <h1 class="auth-title">Vaultless Data Tokenization</h1>
+        <p class="auth-lead">Protect banking PII without breaking analytics. Explore a live tokenization service, a full Medallion pipeline and controlled, audited disclosure, all on synthetic data.</p>
+        <ul class="auth-points">
+          <li><span class="auth-ico" aria-hidden="true">⚡</span><div><strong>Live REST API</strong><span>Tokenize and detokenize through Dyau.ai's secure gateway</span></div></li>
+          <li><span class="auth-ico" aria-hidden="true">🏗️</span><div><strong>Medallion pipeline</strong><span>RAW → Bronze → Silver → Gold, with disclosure kept separate</span></div></li>
+          <li><span class="auth-ico" aria-hidden="true">🛡️</span><div><strong>Governed by design</strong><span>Format-preserving tokens, role policies, full audit trail</span></div></li>
+        </ul>
+      </div>
+
+      <div class="auth-card" role="region" aria-live="polite">
+        <!-- Step 1: email -->
+        <form id="auth-email-form" class="auth-step" novalidate>
+          <h2 id="auth-title">Sign in to the demo</h2>
+          <p class="auth-sub">Enter your work email. If it's on the invite list, we'll email you a 6-digit code.</p>
+          <label for="auth-email" class="auth-label">Work email</label>
+          <input id="auth-email" class="form-input auth-input" type="email" autocomplete="email" inputmode="email" placeholder="name@company.com" required>
+          <div id="auth-email-error" class="auth-error" role="alert" hidden></div>
+          <button id="auth-email-btn" type="submit" class="btn btn-proceed auth-submit">
+            <span class="auth-btn-label">Email me a code</span><span class="auth-spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- Step 2: code -->
+        <form id="auth-code-form" class="auth-step" novalidate hidden>
+          <button type="button" id="auth-back" class="auth-back">← Use a different email</button>
+          <h2>Check your inbox</h2>
+          <p class="auth-sub" id="auth-code-sub">We sent a code to your email if it's on the invite list. It expires in 10 minutes.</p>
+          <label class="auth-label" for="auth-otp-0">6-digit code</label>
+          <div class="otp-row" id="otp-row">
+            <input id="auth-otp-0" class="otp-box" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="Digit 1">
+            <input class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+            <input class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+            <input class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+            <input class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+            <input class="otp-box" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+          </div>
+          <div id="auth-dev-code" class="auth-dev" hidden></div>
+          <div id="auth-code-error" class="auth-error" role="alert" hidden></div>
+          <button id="auth-code-btn" type="submit" class="btn btn-proceed auth-submit">
+            <span class="auth-btn-label">Verify and continue</span><span class="auth-spinner" aria-hidden="true"></span>
+          </button>
+          <button type="button" id="auth-resend" class="auth-link" disabled>Resend code</button>
+        </form>
+
+        <!-- Not configured -->
+        <div id="auth-unconfigured" class="auth-step" hidden>
+          <h2>Demo temporarily unavailable</h2>
+          <p class="auth-sub">The secure gateway for this demo isn't connected on this deployment. Please contact <a href="mailto:contact@dyau.ai">contact@dyau.ai</a> for access.</p>
+        </div>
+
+        <div id="auth-checking" class="auth-step auth-checking">
+          <span class="auth-spinner is-on" aria-hidden="true"></span><span>Checking your session…</span>
+        </div>
+
+        <p class="auth-foot">Access is limited to invited reviewers. Need access? <a href="mailto:contact@dyau.ai?subject=Tokenization%20demo%20access">Request an invite</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="tk-app" hidden>
+
   <!-- Engine status ribbon -->
   <section class="logic-inspector-bar" aria-label="Tokenization engine status">
     <div class="container logic-inspector-container">
       <div class="logic-inspector-title">
         <span class="pulse-indicator"></span>
-        <span>Engine running in your browser:</span>
+        <span>Tokenization engines:</span>
       </div>
       <div class="tk-ribbon-pills">
-        <span class="logic-pill" id="ribbon-selftest">NIST FF1 self-test: running…</span>
-        <span class="logic-pill">AES-256 · FF1 (NIST SP 800-38G)</span>
-        <span class="logic-pill">Minimum domain 10⁶ enforced</span>
-        <span class="logic-pill" id="ribbon-key">Session key: —</span>
-        <span class="logic-pill">0 network calls</span>
+        <span class="logic-pill tk-live-pill" id="ribbon-live" data-mode="unknown"><i class="tk-live-dot"></i><span id="ribbon-live-text">Live REST service: checking…</span></span>
+        <span class="logic-pill" id="ribbon-selftest">Fallback engine self-test: running…</span>
+        <span class="logic-pill">FF1 · AES-256 (NIST SP 800-38G)</span>
+        <span class="logic-pill" id="ribbon-key">Lab key: —</span>
       </div>
     </div>
   </section>
@@ -62,40 +133,62 @@
       </div>
 
       <div class="ws-user-status">
-        <div class="tk-region-switch" role="group" aria-label="Sample data region">
-          <span class="tk-region-label">Sample data:</span>
+        <div class="tk-region-switch" id="region-switch" role="group" aria-label="Lab sample data region" hidden>
+          <span class="tk-region-label">Lab data:</span>
           <div class="sim-toggle-btn-group">
             <button class="sim-toggle-btn active" data-region="my">🇲🇾 Malaysia</button>
             <button class="sim-toggle-btn" data-region="us">🇺🇸 United States</button>
           </div>
         </div>
-        <button id="btn-reset-tk" class="btn btn-reset">↺ Reset Demo</button>
+        <button id="btn-reset-tk" class="btn btn-reset" hidden>↺ Reset Labs</button>
+        <div class="tk-user" id="tk-user">
+          <span class="tk-user-avatar" id="tk-user-avatar" aria-hidden="true">?</span>
+          <span class="tk-user-email" id="tk-user-email"></span>
+          <button id="btn-signout" class="btn btn-reset">Sign out</button>
+        </div>
       </div>
 
       <nav class="workspace-tabs-nav" aria-label="Demo sections">
-        <button class="ws-tab-btn active" data-tab="tab-edge"><span>🛡️</span><span>1. Edge Interception</span></button>
-        <button class="ws-tab-btn" data-tab="tab-access"><span>👥</span><span>2. Access &amp; Audit</span></button>
-        <button class="ws-tab-btn" data-tab="tab-search"><span>🔎</span><span>3. Search &amp; Join on Tokens</span></button>
-        <button class="ws-tab-btn" data-tab="tab-formats"><span>🔑</span><span>4. Formats &amp; Key Rotation</span></button>
+        <span class="tk-tab-group">Live service</span>
+        <button class="ws-tab-btn active" data-tab="tab-medallion"><span>🏗️</span><span>Medallion Pipeline</span><span class="tab-badge-num tk-badge-live">Live</span></button>
+        <button class="ws-tab-btn" data-tab="tab-api"><span>⚡</span><span>REST API Console</span><span class="tab-badge-num tk-badge-live">Live</span></button>
+        <span class="tk-tab-group">Concept labs</span>
+        <button class="ws-tab-btn" data-tab="tab-edge"><span>🛡️</span><span>Edge Interception</span></button>
+        <button class="ws-tab-btn" data-tab="tab-access"><span>👥</span><span>Access &amp; Audit</span></button>
+        <button class="ws-tab-btn" data-tab="tab-search"><span>🔎</span><span>Search &amp; Join</span></button>
+        <button class="ws-tab-btn" data-tab="tab-formats"><span>🔑</span><span>Formats &amp; Keys</span></button>
       </nav>
     </div>
   </div>
 
   <main class="container" style="padding-bottom: 80px;">
 
-    <!-- Privacy notice -->
-    <div class="tk-notice">
+    <!-- Context notice (text switches between live tabs and labs) -->
+    <div class="tk-notice" id="tk-notice">
       <div class="tk-notice-icon" aria-hidden="true">🔒</div>
-      <div>
-        <strong>Everything on this page runs inside your browser.</strong>
-        A fresh AES-256 key is generated in this tab when the page loads, held only in memory, and discarded when you close or reset it. Nothing you type is stored or sent anywhere. All identifiers in the samples are synthetic test data.
-      </div>
+      <div id="tk-notice-text"></div>
     </div>
+
+    <div id="tk-fallback-banner" class="tk-fallback-banner" role="status" hidden>
+      <span aria-hidden="true">⚠️</span>
+      <div><strong>Live service unavailable — using the in-browser reference engine.</strong> <span id="tk-fallback-reason"></span> Tokens made now differ from live tokens and can only be reversed in this tab.</div>
+      <button id="btn-retry-live" class="btn btn-outline tk-btn-sm">Retry live service</button>
+    </div>
+
+    <!-- =================================================================
+         LIVE: MEDALLION PIPELINE
+         ================================================================= -->
+    <div id="tab-medallion" class="tab-content-panel active"></div>
+
+    <!-- =================================================================
+         LIVE: REST API CONSOLE
+         ================================================================= -->
+    <div id="tab-api" class="tab-content-panel"></div>
 
     <!-- =================================================================
          TAB 1: EDGE INTERCEPTION
          ================================================================= -->
-    <div id="tab-edge" class="tab-content-panel active">
+    <div id="tab-edge" class="tab-content-panel">
 
       <div class="tk-intro">
         <span class="section-tag">Step 1 · Zero-trust edge</span>
@@ -405,11 +498,13 @@
       </div>
 
       <p class="tk-footnote">
-        This page uses a browser reference implementation for demonstration. Production deployments run the same standard (FF1, AES-256) in a hardened, access-controlled service with keys held in a key management system, and are designed to support PCI DSS, PDPA, GDPR and HIPAA programmes.
+        These concept labs use an in-browser reference implementation so every step can be inspected. Production deployments run the same standard (FF1, AES-256) in a hardened, access-controlled service with keys held in a key management system, and are designed to support PCI DSS, PDPA, GDPR and HIPAA programmes.
       </p>
     </div>
 
   </main>
+
+  </div><!-- /#tk-app -->
 
   <!-- Toast -->
   <div id="demo-toast" class="demo-toast"></div>
@@ -429,7 +524,7 @@
             </div>
           </div>
           <p>
-            Data tokenization demonstration for prospective enterprise clients. Runs entirely in the browser with synthetic data; no production keys, services or internal code are used.
+            Invite-only data tokenization demonstration for prospective enterprise clients. Synthetic data only. Live calls go through Dyau.ai's secure gateway; service addresses and credentials are never exposed to the browser.
           </p>
         </div>
 
@@ -467,6 +562,10 @@
   </footer>
 
   <script src="js/fpe-engine.js"></script>
+  <script src="js/tk-client.js"></script>
   <script src="js/tokenization.js"></script>
+  <script src="js/tk-medallion.js"></script>
+  <script src="js/tk-console.js"></script>
+  <script src="js/tk-gate.js"></script>
 </body>
 </html>
