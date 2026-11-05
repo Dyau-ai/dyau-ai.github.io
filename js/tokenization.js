@@ -276,7 +276,6 @@
     const d = F();
     const my = state.region === 'my';
     return [
-      { path: 'customer.full_name', op: 'mask', note: 'Free text: masked at the edge' },
       { path: `customer.${d.id.key}`, op: 'tokenize', field: 'id' },
       { path: 'customer.email', op: 'tokenize', field: 'email' },
       { path: `customer.${d.phone.key}`, op: 'tokenize', field: 'phone' },
@@ -737,7 +736,6 @@
     const dob = state.region === 'my' ? '1990-07-15' : '1988-07-15';
     rows.push(`<tr><td><strong>Date of birth</strong></td><td>Generalized to year (a realistic date range has fewer than 10<sup>6</sup> values, below the safe floor)</td><td class="tk-nowrap"><code>${dob}</code> → <code>${dob.slice(0, 4)}-01-01</code></td><td>n/a</td><td><span class="tk-muted">No</span></td></tr>`);
     rows.push('<tr><td><strong>Card CVV / CVC</strong></td><td>Never stored, not even as a token. Dropped at the edge after authorization</td><td class="tk-nowrap"><code>123</code> → <span class="tk-muted">removed</span></td><td>n/a</td><td><span class="tk-muted">No</span></td></tr>');
-    rows.push('<tr><td><strong>Full name</strong></td><td>Masked at the edge (free text has no fixed format)</td><td class="tk-nowrap"><code>Nur Aisyah</code> → <code>N••• A•••</code></td><td>n/a</td><td><span class="tk-muted">No</span></td></tr>');
     $('#profiles-table').innerHTML = `<thead><tr><th>Field</th><th>Treatment</th><th>Live example</th><th>FF1 domain</th><th>Joinable</th></tr></thead><tbody>${rows.join('')}</tbody>`;
   }
 
@@ -821,7 +819,7 @@
     state.store.customers.forEach((r) => { counts[r.kv] = (counts[r.kv] || 0) + 1; });
     state.store.txns.forEach((r) => { counts[r.kv] = (counts[r.kv] || 0) + 1; });
     $('#kv-chip').textContent = `Active key: v${state.kv}`;
-    $('#ribbon-key').textContent = `Session key v${state.kv} · fingerprint ${keyFingerprint(state.kv)}`;
+    $('#ribbon-key').textContent = `Lab key v${state.kv} · ${keyFingerprint(state.kv)}`;
     $('#kv-status').innerHTML = `
       <div class="tk-kv-row"><span>Active key</span><strong>v${state.kv}</strong><code>fingerprint ${keyFingerprint(state.kv)}</code></div>
       <div class="tk-kv-row"><span>Rows by key version</span><strong>${Object.entries(counts).map(([k, n]) => `v${k}: ${n}`).join(' · ')}</strong></div>
@@ -905,7 +903,7 @@
     $('#selftest-chip').textContent = `${passed}/${res.length} passed`;
     $('#selftest-chip').className = 'tk-chip ' + (all ? 'tk-chip-ok' : 'tk-chip-warn');
     const pill = $('#ribbon-selftest');
-    pill.textContent = all ? `NIST FF1 self-test: ${passed}/${res.length} passed ✓` : `NIST FF1 self-test: ${passed}/${res.length} — FAILED`;
+    pill.textContent = all ? `Fallback engine: NIST self-test ${passed}/${res.length} ✓` : `Fallback engine self-test: ${passed}/${res.length} — FAILED`;
     pill.classList.toggle('tk-pill-ok', all);
     pill.classList.toggle('tk-pill-bad', !all);
   }
